@@ -155,4 +155,3 @@ export default function Home() {
     </main>
   )
 }
-// Teste para forçar Git a reconhecer modificação
