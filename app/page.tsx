@@ -3,7 +3,7 @@
 import { useState } from 'react'
 
 export default function Home() {
-  const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas'>('inicio')
+  const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home'>('inicio')
   const [nome, setNome] = useState('')
   const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
   const [perfil, setPerfil] = useState<string | null>(null)
@@ -145,11 +145,39 @@ export default function Home() {
             </ul>
           </div>
           <button
-            onClick={() => alert('Você será redirecionado para a tela inicial do app com todas as funções ativas!')}
+            onClick={() => setStep('home')}
             className="bg-green-500 hover:bg-green-600 text-black font-bold py-2 w-full rounded transition"
           >
             Ir para a Página Inicial
           </button>
+        </section>
+      )}
+
+      {step === 'home' && (
+        <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
+          <h2 className="text-3xl font-bold text-green-400 text-center">Home - Bem-vindo, {nome}!</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-zinc-300">
+            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+              <h3 className="text-green-400 font-semibold text-lg">Trilhas de Autodesenvolvimento</h3>
+              <p>Acesse conteúdos e desafios personalizados para evoluir continuamente.</p>
+            </div>
+            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+              <h3 className="text-green-400 font-semibold text-lg">Sessões com Psicólogos</h3>
+              <p>Agende conversas com nossos especialistas parceiros para cuidar da sua mente.</p>
+            </div>
+            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+              <h3 className="text-green-400 font-semibold text-lg">Mensagens Diárias</h3>
+              <p>Receba motivações diárias e mantenha o foco no que importa.</p>
+            </div>
+            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+              <h3 className="text-green-400 font-semibold text-lg">Comunidade Jovify</h3>
+              <p>Conecte-se com outros jovens inconformados e compartilhe sua jornada.</p>
+            </div>
+            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+              <h3 className="text-green-400 font-semibold text-lg">Conteúdos Personalizados</h3>
+              <p>Receba artigos, vídeos e dicas com base no seu perfil: {perfil}.</p>
+            </div>
+          </div>
         </section>
       )}
     </main>
