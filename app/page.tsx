@@ -54,6 +54,29 @@ export default function Home() {
     setStep('resultado')
   }
 
+  const voltarEtapa = () => {
+    switch (step) {
+      case 'cadastro':
+        setStep('inicio')
+        break
+      case 'autoconhecimento':
+        setStep('cadastro')
+        break
+      case 'resultado':
+        setStep('autoconhecimento')
+        break
+      case 'boasVindas':
+        setStep('resultado')
+        break
+      case 'home':
+        setStep('boasVindas')
+        break
+      case 'trilhas':
+        setStep('home')
+        break
+    }
+  }
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white">
       {step === 'inicio' && (
@@ -88,6 +111,9 @@ export default function Home() {
           >
             Avançar
           </button>
+          <div className="text-center pt-2">
+            <button onClick={voltarEtapa} className="bg-zinc-800 hover:bg-zinc-700 text-white py-1 px-4 rounded-lg shadow-md text-sm">← Voltar</button>
+          </div>
         </section>
       )}
 
@@ -113,6 +139,9 @@ export default function Home() {
           >
             Ver meu perfil
           </button>
+          <div className="text-center pt-2">
+            <button onClick={voltarEtapa} className="bg-zinc-800 hover:bg-zinc-700 text-white py-1 px-4 rounded-lg shadow-md text-sm">← Voltar</button>
+          </div>
         </section>
       )}
 
@@ -127,6 +156,9 @@ export default function Home() {
           >
             Acessar Funções Especiais
           </button>
+          <div className="text-center pt-2">
+            <button onClick={voltarEtapa} className="bg-zinc-800 hover:bg-zinc-700 text-white py-1 px-4 rounded-lg shadow-md text-sm">← Voltar</button>
+          </div>
         </section>
       )}
 
@@ -150,6 +182,9 @@ export default function Home() {
           >
             Ir para a Página Inicial
           </button>
+          <div className="text-center pt-2">
+            <button onClick={voltarEtapa} className="bg-zinc-800 hover:bg-zinc-700 text-white py-1 px-4 rounded-lg shadow-md text-sm">← Voltar</button>
+          </div>
         </section>
       )}
 
@@ -178,6 +213,9 @@ export default function Home() {
               <p>Receba artigos, vídeos e dicas com base no seu perfil: {perfil}.</p>
             </div>
           </div>
+          <div className="text-center pt-2">
+            <button onClick={voltarEtapa} className="bg-zinc-800 hover:bg-zinc-700 text-white py-1 px-4 rounded-lg shadow-md text-sm">← Voltar</button>
+          </div>
         </section>
       )}
 
@@ -187,7 +225,6 @@ export default function Home() {
           <p className="text-zinc-300 text-center">
             Aqui você encontrará desafios, conteúdos e práticas alinhadas ao seu perfil: <span className="text-green-400 font-semibold">{perfil}</span>.
           </p>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-zinc-300">
             <div className="bg-zinc-800 p-4 rounded-xl">
               <h3 className="text-green-400 font-semibold">Trilha da Autoliderança</h3>
@@ -206,13 +243,9 @@ export default function Home() {
               <p>Desenvolva sua expressão, escuta ativa e impacto em interações pessoais e profissionais.</p>
             </div>
           </div>
-
-          <button
-            onClick={() => setStep('home')}
-            className="bg-green-500 hover:bg-green-600 text-black font-bold py-2 w-full rounded transition"
-          >
-            Voltar para a Home
-          </button>
+          <div className="text-center pt-2">
+            <button onClick={voltarEtapa} className="bg-zinc-800 hover:bg-zinc-700 text-white py-1 px-4 rounded-lg shadow-md text-sm">← Voltar</button>
+          </div>
         </section>
       )}
     </main>
