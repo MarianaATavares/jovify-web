@@ -3,7 +3,7 @@
 import { useState } from 'react'
 
 export default function Home() {
-  const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home'>('inicio')
+  const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas'>('inicio')
   const [nome, setNome] = useState('')
   const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
   const [perfil, setPerfil] = useState<string | null>(null)
@@ -157,7 +157,7 @@ export default function Home() {
         <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
           <h2 className="text-3xl font-bold text-green-400 text-center">Home - Bem-vindo, {nome}!</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-zinc-300">
-            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer" onClick={() => setStep('trilhas')}>
               <h3 className="text-green-400 font-semibold text-lg">Trilhas de Autodesenvolvimento</h3>
               <p>Acesse conteúdos e desafios personalizados para evoluir continuamente.</p>
             </div>
@@ -178,6 +178,41 @@ export default function Home() {
               <p>Receba artigos, vídeos e dicas com base no seu perfil: {perfil}.</p>
             </div>
           </div>
+        </section>
+      )}
+
+      {step === 'trilhas' && (
+        <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
+          <h2 className="text-3xl font-bold text-green-400 text-center">Trilhas de Autodesenvolvimento</h2>
+          <p className="text-zinc-300 text-center">
+            Aqui você encontrará desafios, conteúdos e práticas alinhadas ao seu perfil: <span className="text-green-400 font-semibold">{perfil}</span>.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-zinc-300">
+            <div className="bg-zinc-800 p-4 rounded-xl">
+              <h3 className="text-green-400 font-semibold">Trilha da Autoliderança</h3>
+              <p>Fortaleça sua capacidade de tomar decisões, se motivar e influenciar com autenticidade.</p>
+            </div>
+            <div className="bg-zinc-800 p-4 rounded-xl">
+              <h3 className="text-green-400 font-semibold">Trilha da Inteligência Emocional</h3>
+              <p>Aprenda a lidar melhor com emoções, aumentar sua empatia e melhorar seus relacionamentos.</p>
+            </div>
+            <div className="bg-zinc-800 p-4 rounded-xl">
+              <h3 className="text-green-400 font-semibold">Trilha do Propósito</h3>
+              <p>Descubra o que te move, alinhe sua vida com seus valores e encontre sentido no que faz.</p>
+            </div>
+            <div className="bg-zinc-800 p-4 rounded-xl">
+              <h3 className="text-green-400 font-semibold">Trilha da Comunicação</h3>
+              <p>Desenvolva sua expressão, escuta ativa e impacto em interações pessoais e profissionais.</p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setStep('home')}
+            className="bg-green-500 hover:bg-green-600 text-black font-bold py-2 w-full rounded transition"
+          >
+            Voltar para a Home
+          </button>
         </section>
       )}
     </main>
