@@ -60,21 +60,66 @@ export default function Home() {
         <section className="text-center space-y-6">
           <h1 className="text-4xl font-bold text-green-400">Bem-vindo à Jovify</h1>
           <p className="text-zinc-300">Descubra seu perfil e desbloqueie funções exclusivas para o seu desenvolvimento!</p>
-
           <button onClick={() => setStep('cadastro')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
             Começar
           </button>
-
           <button onClick={() => setStep('sobre')} className="mt-4 bg-zinc-800 hover:bg-zinc-700 text-green-400 font-bold py-2 px-6 rounded transition">
             Sobre a Jovify
           </button>
-
           <div className="mt-6 flex justify-center gap-4 text-sm text-zinc-400">
             <a href="https://instagram.com/thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">Instagram</a>
             <a href="https://youtube.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">YouTube</a>
             <a href="mailto:sacjovify@gmail.com" className="hover:text-green-400">Email</a>
             <a href="https://tiktok.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">TikTok</a>
           </div>
+        </section>
+      )}
+
+      {step === 'cadastro' && (
+        <section className="text-center space-y-6">
+          <h2 className="text-3xl font-bold text-green-400">Como podemos te chamar?</h2>
+          <input
+            type="text"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            className="p-2 rounded text-black"
+            placeholder="Digite seu nome"
+          />
+          <button onClick={() => setStep('autoconhecimento')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
+            Continuar
+          </button>
+        </section>
+      )}
+
+      {step === 'autoconhecimento' && (
+        <section className="space-y-6 w-full max-w-xl">
+          <h2 className="text-3xl font-bold text-green-400 text-center">Responda com sinceridade:</h2>
+          {perguntas.map((pergunta, index) => (
+            <div key={index} className="bg-zinc-800 p-4 rounded">
+              <p className="text-white mb-2">{pergunta}</p>
+              <input
+                type="range"
+                min={0}
+                max={4}
+                value={respostas[index]}
+                onChange={(e) => handleChange(index, parseInt(e.target.value))}
+                className="w-full"
+              />
+            </div>
+          ))}
+          <button onClick={enviarRespostas} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition w-full">
+            Ver meu perfil
+          </button>
+        </section>
+      )}
+
+      {step === 'resultado' && perfil && (
+        <section className="w-full max-w-2xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6 text-center">
+          <h2 className="text-3xl font-bold text-green-400">Seu perfil é: {perfil}</h2>
+          <p className="text-zinc-300 text-lg">{getDescricaoPerfil(perfil)}</p>
+          <button onClick={() => setStep('inicio')} className="bg-green-500 hover:bg-green-600 text-black font-bold py-2 w-full rounded transition">
+            Voltar ao Início
+          </button>
         </section>
       )}
 
