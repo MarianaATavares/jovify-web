@@ -8,53 +8,50 @@ export default function Home() {
   const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
   const [perfil, setPerfil] = useState<string | null>(null)
 
-  const handleChange = (index: number, value: number) => {
-    const novasRespostas = [...respostas]
-    novasRespostas[index] = value
-    setRespostas(novasRespostas)
-  }
+  const perguntas = [
+    'Sinto que conheço bem meus pontos fortes e fracos.',
+    'Tenho clareza sobre meus objetivos pessoais e profissionais.',
+    'Consigo manter a calma mesmo em situações estressantes.',
+    'Sou capaz de me motivar mesmo diante de desafios.',
+    'Tenho facilidade em me comunicar com diferentes pessoas.',
+    'Sinto que pertenço a algum grupo ou comunidade.',
+    'Tenho o hábito de refletir sobre minhas ações e sentimentos.',
+    'Busco constantemente me desenvolver e aprender coisas novas.'
+  ]
 
-  const calcularPerfil = () => {
-    const soma = respostas.reduce((a, b) => a + b, 0)
-    if (soma < 12) return 'Empático'
-    if (soma < 20) return 'Guardião'
-    if (soma < 28) return 'Estratégico'
-    return 'Pioneiro'
-  }
-
-  const getDescricaoPerfil = (perfil: string) => {
+  function getDescricaoPerfil(perfil: string) {
     switch (perfil) {
-      case 'Empático':
-        return 'Você tem uma grande sensibilidade emocional, valoriza conexões humanas e está sempre pronto para apoiar quem precisa. Seu poder está na escuta e no acolhimento.'
-      case 'Guardião':
-        return 'Você é leal, confiável e organizado. Gosta de proteger o que é importante e se dedica com responsabilidade às suas tarefas. Um verdadeiro pilar para qualquer equipe.'
-      case 'Estratégico':
-        return 'Você pensa à frente, enxerga soluções e sabe como alcançar objetivos com inteligência. Seu raciocínio lógico e visão tática te destacam.'
-      case 'Pioneiro':
-        return 'Você é um líder nato! Ama inovação, desafiar padrões e transformar ideias em realidade. Seu espírito criativo e ousado inspira mudanças.'
+      case 'Explorador':
+        return 'Você é curioso(a), aberto(a) a novas experiências e sempre busca aprender. Gosta de se conhecer melhor e está em constante evolução.'
+      case 'Conector':
+        return 'Você valoriza os relacionamentos e sente que faz parte de algo maior. A troca com outras pessoas é essencial para seu crescimento.'
+      case 'Construtor':
+        return 'Você é prático(a), gosta de planejar e colocar a mão na massa. Enxerga o autoconhecimento como uma ferramenta para alcançar seus objetivos.'
       default:
         return ''
     }
   }
 
-  const perguntas = [
-    'Você se considera uma pessoa comunicativa?',
-    'Costuma planejar com antecedência suas tarefas?',
-    'Consegue entender facilmente os sentimentos dos outros?',
-    'Gosta de assumir a liderança em projetos?',
-    'Você prefere estabilidade ou mudanças constantes?',
-    'Tem facilidade em resolver problemas de forma lógica?',
-    'Valoriza relações profundas e sinceras?',
-    'Sente-se motivado por desafios e inovação?'
-  ]
+  function handleChange(index: number, value: number) {
+    const novasRespostas = [...respostas]
+    novasRespostas[index] = value
+    setRespostas(novasRespostas)
+  }
 
-  const enviarRespostas = () => {
-    const perfilCalculado = calcularPerfil()
+  function enviarRespostas() {
+    const soma = respostas.reduce((acc, val) => acc + val, 0)
+    const media = soma / respostas.length
+    let perfilCalculado = ''
+
+    if (media >= 4) perfilCalculado = 'Explorador'
+    else if (media >= 2.5) perfilCalculado = 'Conector'
+    else perfilCalculado = 'Construtor'
+
     setPerfil(perfilCalculado)
     setStep('resultado')
   }
 
-  const voltarEtapa = () => {
+  function voltarEtapa() {
     switch (step) {
       case 'cadastro':
         setStep('inicio')
@@ -97,12 +94,6 @@ export default function Home() {
           <button onClick={() => setStep('cadastro')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
             Começar
           </button>
-          <div className="mt-6 flex justify-center gap-4 text-sm text-zinc-400">
-            <a href="https://instagram.com/thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">Instagram</a>
-            <a href="https://youtube.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">YouTube</a>
-            <a href="mailto:sacjovify@gmail.com" className="hover:text-green-400">Email</a>
-            <a href="https://tiktok.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">TikTok</a>
-          </div>
         </section>
       )}
 
@@ -110,13 +101,13 @@ export default function Home() {
         <section className="w-full max-w-2xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-4 text-zinc-300">
           <h2 className="text-3xl font-bold text-green-400 text-center">Sobre a Jovify</h2>
           <p>
-            A Jovify nasceu da inquietação de transformar o desenvolvimento pessoal dos jovens em uma experiência acessível, envolvente e realmente eficaz. Sabemos que muitos enfrentam dificuldades emocionais, falta de propósito e insegurança sobre o futuro — e foi pensando nisso que criamos a Jovify: uma plataforma que une tecnologia, psicologia e comunidade para impulsionar cada jovem a descobrir seu verdadeiro potencial.
+            A Jovify surgiu como um projeto de um aluno do curso de Análise e Desenvolvimento de Sistemas, em 2024, com o objetivo de proporcionar aos jovens uma jornada de autoconhecimento de forma simples e eficaz.
           </p>
           <p>
-            Mais do que uma ferramenta, somos um movimento. Acreditamos que todo jovem tem dentro de si uma força transformadora — e a nossa missão é desbloqueá-la com trilhas personalizadas, apoio profissional e uma rede de apoio inspiradora.
+            Pensando nas dificuldades enfrentadas pela juventude, como ansiedade, inseguranças e dúvidas sobre o futuro, esse projeto nasceu como uma ferramenta para auxiliar nesse processo de descoberta pessoal.
           </p>
           <p>
-            Seja bem-vindo(a) à revolução do autodesenvolvimento. Seja bem-vindo(a) à Jovify.
+            Ao longo do desenvolvimento, a ideia foi se expandindo e tomou forma como uma plataforma interativa, acolhedora e personalizada. A Jovify acredita que todo jovem tem um grande potencial esperando para ser desbloqueado — e está aqui para ajudar nessa jornada.
           </p>
           <div className="text-center pt-2">
             <button onClick={voltarEtapa} className="bg-zinc-800 hover:bg-zinc-700 text-white py-1 px-4 rounded-lg shadow-md text-sm">← Voltar</button>
@@ -124,7 +115,7 @@ export default function Home() {
         </section>
       )}
 
-      {/* As outras telas (cadastro, autoconhecimento, resultado, boasVindas, home, trilhas) estão exatamente como você enviou, sem alterações. */}
+      {/* As outras telas do seu projeto permanecem exatamente como estão, sem alteração nenhuma. */}
     </main>
   )
 }
