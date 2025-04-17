@@ -60,12 +60,15 @@ export default function Home() {
         <section className="text-center space-y-6">
           <h1 className="text-4xl font-bold text-green-400">Bem-vindo à Jovify</h1>
           <p className="text-zinc-300">Descubra seu perfil e desbloqueie funções exclusivas para o seu desenvolvimento!</p>
+
           <button onClick={() => setStep('cadastro')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
             Começar
           </button>
+
           <button onClick={() => setStep('sobre')} className="mt-4 bg-zinc-800 hover:bg-zinc-700 text-green-400 font-bold py-2 px-6 rounded transition">
             Sobre a Jovify
           </button>
+
           <div className="mt-6 flex justify-center gap-4 text-sm text-zinc-400">
             <a href="https://instagram.com/thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">Instagram</a>
             <a href="https://youtube.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">YouTube</a>
@@ -74,8 +77,6 @@ export default function Home() {
           </div>
         </section>
       )}
-
-      {/* As outras seções continuam iguais */}
 
       {step === 'sobre' && (
         <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
