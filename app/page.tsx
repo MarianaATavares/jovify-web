@@ -3,7 +3,7 @@
 import { useState } from 'react'
 
 export default function Home() {
-  const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas'>('inicio')
+  const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' | 'psicologos'>('inicio')
   const [nome, setNome] = useState('')
   const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
   const [perfil, setPerfil] = useState<string | null>(null)
@@ -74,6 +74,9 @@ export default function Home() {
       case 'trilhas':
         setStep('home')
         break
+      case 'psicologos':
+        setStep('home')
+        break
     }
   }
 
@@ -86,12 +89,6 @@ export default function Home() {
           <button onClick={() => setStep('cadastro')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
             Começar
           </button>
-          <div className="mt-6 flex justify-center gap-4 text-sm text-zinc-400">
-            <a href="https://instagram.com/thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">Instagram</a>
-            <a href="https://youtube.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">YouTube</a>
-            <a href="mailto:sacjovify@gmail.com" className="hover:text-green-400">Email</a>
-            <a href="https://tiktok.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">TikTok</a>
-          </div>
         </section>
       )}
 
@@ -196,7 +193,7 @@ export default function Home() {
               <h3 className="text-green-400 font-semibold text-lg">Trilhas de Autodesenvolvimento</h3>
               <p>Acesse conteúdos e desafios personalizados para evoluir continuamente.</p>
             </div>
-            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer" onClick={() => setStep('psicologos')}>
               <h3 className="text-green-400 font-semibold text-lg">Sessões com Psicólogos</h3>
               <p>Agende conversas com nossos especialistas parceiros para cuidar da sua mente.</p>
             </div>
@@ -215,6 +212,26 @@ export default function Home() {
           </div>
           <div className="text-center pt-2">
             <button onClick={voltarEtapa} className="bg-zinc-800 hover:bg-zinc-700 text-white py-1 px-4 rounded-lg shadow-md text-sm">← Voltar</button>
+          </div>
+        </section>
+      )}
+
+      {step === 'psicologos' && (
+        <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
+          <h2 className="text-3xl font-bold text-green-400 text-center">Sessões com Psicólogos</h2>
+          <div className="bg-zinc-800 p-6 rounded-xl text-zinc-300">
+            <h3 className="text-green-400 font-semibold text-xl">Psicólogo Parceiro</h3>
+            <p><strong>Nome:</strong> Bruno Ferreira</p>
+            <p><strong>CRP:</strong> 06/123456</p>
+            <p><strong>Especialidade:</strong> Psicologia Positiva e Terapia Cognitivo-Comportamental</p>
+          </div>
+          <div className="bg-zinc-800 p-6 rounded-xl text-zinc-300">
+            <h3 className="text-green-400 font-semibold text-xl">É psicólogo e quer trabalhar com a Jovify?</h3>
+            <p>Estamos recrutando profissionais engajados em transformar a vida de jovens inconformados.</p>
+            <p>Envie seu currículo ou proposta para: <strong className="text-white">EquipeJovify@email.com</strong></p>
+          </div>
+          <div className="text-center pt-4">
+            <button onClick={voltarEtapa} className="bg-zinc-800 hover:bg-zinc-700 text-white py-2 px-6 rounded-lg shadow-md">← Voltar</button>
           </div>
         </section>
       )}
