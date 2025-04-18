@@ -228,7 +228,7 @@ export default function Home() {
           <div className="bg-zinc-800 p-6 rounded-xl text-zinc-300">
             <h3 className="text-green-400 font-semibold text-xl">É psicólogo e quer trabalhar com a Jovify?</h3>
             <p>Estamos recrutando profissionais engajados em transformar a vida de jovens inconformados.</p>
-            <p>Envie seu currículo ou proposta para: <strong className="text-white">EquipeJovify@email.com</strong></p>
+            <p>Envie seu currículo ou proposta para: <strong className="text-white">EquipeJovify@gmail.com</strong></p>
           </div>
           <div className="text-center pt-4">
             <button onClick={voltarEtapa} className="bg-zinc-800 hover:bg-zinc-700 text-white py-2 px-6 rounded-lg shadow-md">← Voltar</button>
