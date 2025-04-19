@@ -1,10 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { FaInstagram, FaYoutube, FaTiktok } from 'react-icons/fa'
 
 export default function Home() {
-  const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' | 'psicologos'>('inicio')
+  const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' | 'psicologos' | 'sobre'>('inicio')
   const [nome, setNome] = useState('')
   const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
   const [perfil, setPerfil] = useState<string | null>(null)
@@ -78,6 +77,9 @@ export default function Home() {
       case 'psicologos':
         setStep('home')
         break
+      case 'sobre':
+        setStep('inicio')
+        break
     }
   }
 
@@ -85,16 +87,13 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white">
       {step === 'inicio' && (
         <section className="text-center space-y-6">
-          <div className="flex justify-center space-x-6 text-green-400 text-2xl mb-2">
-            <a href="https://instagram.com/thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-600">
-              <FaInstagram />
-            </a>
-            <a href="https://youtube.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-600">
-              <FaYoutube />
-            </a>
-            <a href="https://tiktok.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-600">
-              <FaTiktok />
-            </a>
+          <div className="absolute top-4 right-4">
+            <button
+              onClick={() => setStep('sobre')}
+              className="text-sm text-green-400 underline hover:text-green-300 transition"
+            >
+              Sobre a Jovify
+            </button>
           </div>
           <h1 className="text-4xl font-bold text-green-400">Bem-vindo à Jovify</h1>
           <p className="text-zinc-300">Descubra seu perfil e desbloqueie funções exclusivas para o seu desenvolvimento!</p>
@@ -104,7 +103,22 @@ export default function Home() {
         </section>
       )}
 
-      {/* As outras etapas continuam iguais... */}
+      {/* ... todas as outras telas permanecem IGUAIS ... */}
+
+      {step === 'sobre' && (
+        <section className="bg-zinc-900 p-8 rounded-xl shadow-xl w-full max-w-xl text-center space-y-6">
+          <h2 className="text-3xl font-bold text-green-400">Sobre a Jovify</h2>
+          <p className="text-zinc-300 leading-relaxed">
+            O App foi criado em maio de 2024 por uma Estudante brasileira do primeiro Período de Gestão da Tecnologia da Informação, em Goiânia-GO. Inspirada pela busca de conhecimento sobre Saúde Mental familiar e desafios pessoais com ansiedade, a ideia cresceu com o apoio de Professores, Profissionais e Amigos que formaram sua equipe. Hoje, o App continua evoluindo, oferecendo informações e acessibilidade em Saúde Mental e Desenvolvimento Pessoal para Jovens do mundo.
+          </p>
+          <button
+            onClick={() => setStep('inicio')}
+            className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition"
+          >
+            ← Voltar à Tela Inicial
+          </button>
+        </section>
+      )}
     </main>
   )
 }
