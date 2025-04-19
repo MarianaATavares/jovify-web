@@ -1,5 +1,3 @@
-'use client'
-
 import { useState } from 'react'
 
 export default function Home() {
@@ -89,6 +87,13 @@ export default function Home() {
           <button onClick={() => setStep('cadastro')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
             Começar
           </button>
+          
+          {/* Links para redes sociais */}
+          <div className="mt-4 space-x-4">
+            <a href="https://www.instagram.com/thejovify" target="_blank" rel="noopener noreferrer" className="text-green-400">Instagram</a>
+            <a href="https://www.tiktok.com/@thejovify" target="_blank" rel="noopener noreferrer" className="text-green-400">TikTok</a>
+            <a href="https://www.youtube.com/c/thejovify" target="_blank" rel="noopener noreferrer" className="text-green-400">YouTube</a>
+          </div>
         </section>
       )}
 
@@ -248,23 +253,4 @@ export default function Home() {
               <p>Fortaleça sua capacidade de tomar decisões, se motivar e influenciar com autenticidade.</p>
             </div>
             <div className="bg-zinc-800 p-4 rounded-xl">
-              <h3 className="text-green-400 font-semibold">Trilha da Inteligência Emocional</h3>
-              <p>Aprenda a lidar melhor com emoções, aumentar sua empatia e melhorar seus relacionamentos.</p>
-            </div>
-            <div className="bg-zinc-800 p-4 rounded-xl">
-              <h3 className="text-green-400 font-semibold">Trilha do Propósito</h3>
-              <p>Descubra o que te move, alinhe sua vida com seus valores e encontre sentido no que faz.</p>
-            </div>
-            <div className="bg-zinc-800 p-4 rounded-xl">
-              <h3 className="text-green-400 font-semibold">Trilha da Comunicação</h3>
-              <p>Desenvolva sua expressão, escuta ativa e impacto em interações pessoais e profissionais.</p>
-            </div>
-          </div>
-          <div className="text-center pt-2">
-            <button onClick={voltarEtapa} className="bg-zinc-800 hover:bg-zinc-700 text-white py-1 px-4 rounded-lg shadow-md text-sm">← Voltar</button>
-          </div>
-        </section>
-      )}
-    </main>
-  )
-}
+              <h3 className="text-green-400 font-semibold">Trilha
