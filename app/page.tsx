@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 
 export default function Home() {
   const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' | 'psicologos' | 'sobre'>('inicio')
@@ -84,7 +85,8 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white relative">
+      {/* Botão fixo para acessar a tela Sobre */}
       <div className="absolute top-4 right-4">
         <button
           onClick={() => setStep('sobre')}
@@ -94,6 +96,7 @@ export default function Home() {
         </button>
       </div>
 
+      {/* Tela inicial */}
       {step === 'inicio' && (
         <section className="text-center space-y-6">
           <h1 className="text-4xl font-bold text-green-400">Bem-vindo à Jovify</h1>
@@ -107,10 +110,11 @@ export default function Home() {
         </section>
       )}
 
+      {/* Tela Sobre embutida */}
       {step === 'sobre' && (
-        <section className="bg-zinc-900 p-8 rounded-xl shadow-xl w-full max-w-xl text-center space-y-6">
-          <h2 className="text-3xl font-bold text-green-400">Sobre a Jovify</h2>
-          <p className="text-zinc-300 leading-relaxed">
+        <section className="text-center space-y-6 max-w-xl">
+          <h2 className="text-3xl font-bold text-green-400 mb-4">Sobre a Jovify</h2>
+          <p className="text-zinc-300 leading-relaxed mb-4">
             O App foi criado em maio de 2024 por uma Estudante brasileira do primeiro Período de Gestão da Tecnologia da Informação, em Goiânia-GO. Inspirada pela busca de conhecimento sobre Saúde Mental familiar e desafios pessoais com ansiedade, a ideia cresceu com o apoio de Professores, Profissionais e Amigos que formaram sua equipe. Hoje, o App continua evoluindo, oferecendo informações e acessibilidade em Saúde Mental e Desenvolvimento Pessoal para Jovens do mundo.
           </p>
           <button
@@ -122,7 +126,7 @@ export default function Home() {
         </section>
       )}
 
-      {/* Outras telas permanecem iguais e funcionando */}
+      {/* Outras telas continuam normalmente, como antes */}
     </main>
   )
 }
