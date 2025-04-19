@@ -84,17 +84,19 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white relative">
+      {/* Botão fixo no topo para acessar Sobre a Jovify */}
+      <div className="absolute top-4 right-4 z-50">
+        <button
+          onClick={() => setStep('sobre')}
+          className="text-sm text-green-400 underline hover:text-green-300 transition"
+        >
+          Sobre a Jovify
+        </button>
+      </div>
+
       {step === 'inicio' && (
         <section className="text-center space-y-6">
-          <div className="absolute top-4 right-4">
-            <button
-              onClick={() => setStep('sobre')}
-              className="text-sm text-green-400 underline hover:text-green-300 transition"
-            >
-              Sobre a Jovify
-            </button>
-          </div>
           <h1 className="text-4xl font-bold text-green-400">Bem-vindo à Jovify</h1>
           <p className="text-zinc-300">Descubra seu perfil e desbloqueie funções exclusivas para o seu desenvolvimento!</p>
           <button onClick={() => setStep('cadastro')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
@@ -103,7 +105,7 @@ export default function Home() {
         </section>
       )}
 
-      {/* ... todas as outras telas permanecem IGUAIS ... */}
+      {/* ... as outras telas permanecem inalteradas ... */}
 
       {step === 'sobre' && (
         <section className="bg-zinc-900 p-8 rounded-xl shadow-xl w-full max-w-xl text-center space-y-6">
