@@ -1,9 +1,10 @@
+
 'use client'
 
 import { useState } from 'react'
 
 export default function Home() {
-  const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' | 'psicologos'>('inicio')
+  const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home'>('inicio')
   const [nome, setNome] = useState('')
   const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
   const [perfil, setPerfil] = useState<string | null>(null)
@@ -54,32 +55,6 @@ export default function Home() {
     setStep('resultado')
   }
 
-  const voltarEtapa = () => {
-    switch (step) {
-      case 'cadastro':
-        setStep('inicio')
-        break
-      case 'autoconhecimento':
-        setStep('cadastro')
-        break
-      case 'resultado':
-        setStep('autoconhecimento')
-        break
-      case 'boasVindas':
-        setStep('resultado')
-        break
-      case 'home':
-        setStep('boasVindas')
-        break
-      case 'trilhas':
-        setStep('home')
-        break
-      case 'psicologos':
-        setStep('home')
-        break
-    }
-  }
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white">
       {step === 'inicio' && (
@@ -89,6 +64,12 @@ export default function Home() {
           <button onClick={() => setStep('cadastro')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
             Começar
           </button>
+          <div className="mt-6 flex justify-center gap-4 text-sm text-zinc-400">
+            <a href="https://instagram.com/thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">Instagram</a>
+            <a href="https://youtube.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">YouTube</a>
+            <a href="mailto:sacjovify@gmail.com" className="hover:text-green-400">Email</a>
+            <a href="https://tiktok.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">TikTok</a>
+          </div>
         </section>
       )}
 
@@ -108,9 +89,6 @@ export default function Home() {
           >
             Avançar
           </button>
-          <div className="text-center pt-2">
-            <button onClick={voltarEtapa} className="bg-zinc-800 hover:bg-zinc-700 text-white py-1 px-4 rounded-lg shadow-md text-sm">← Voltar</button>
-          </div>
         </section>
       )}
 
@@ -136,9 +114,6 @@ export default function Home() {
           >
             Ver meu perfil
           </button>
-          <div className="text-center pt-2">
-            <button onClick={voltarEtapa} className="bg-zinc-800 hover:bg-zinc-700 text-white py-1 px-4 rounded-lg shadow-md text-sm">← Voltar</button>
-          </div>
         </section>
       )}
 
@@ -153,9 +128,6 @@ export default function Home() {
           >
             Acessar Funções Especiais
           </button>
-          <div className="text-center pt-2">
-            <button onClick={voltarEtapa} className="bg-zinc-800 hover:bg-zinc-700 text-white py-1 px-4 rounded-lg shadow-md text-sm">← Voltar</button>
-          </div>
         </section>
       )}
 
@@ -179,9 +151,6 @@ export default function Home() {
           >
             Ir para a Página Inicial
           </button>
-          <div className="text-center pt-2">
-            <button onClick={voltarEtapa} className="bg-zinc-800 hover:bg-zinc-700 text-white py-1 px-4 rounded-lg shadow-md text-sm">← Voltar</button>
-          </div>
         </section>
       )}
 
@@ -189,9 +158,31 @@ export default function Home() {
         <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
           <h2 className="text-3xl font-bold text-green-400 text-center">Home - Bem-vindo, {nome}!</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-zinc-300">
-            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer" onClick={() => setStep('trilhas')}>
+            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
               <h3 className="text-green-400 font-semibold text-lg">Trilhas de Autodesenvolvimento</h3>
               <p>Acesse conteúdos e desafios personalizados para evoluir continuamente.</p>
             </div>
-            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer" onClick={() => setStep('psicologos')}>
-              <h3 className="text-green-400 font-semibold
+            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+              <h3 className="text-green-400 font-semibold text-lg">Sessões com Psicólogos</h3>
+              <p>Agende conversas com nossos especialistas parceiros para cuidar da sua mente.</p>
+            </div>
+            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+              <h3 className="text-green-400 font-semibold text-lg">Mensagens Diárias</h3>
+              <p>Receba motivações diárias e mantenha o foco no que importa.</p>
+            </div>
+            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+              <h3 className="text-green-400 font-semibold text-lg">Comunidade Jovify</h3>
+              <p>Conecte-se com outros jovens inconformados e compartilhe sua jornada.</p>
+            </div>
+            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+              <h3 className="text-green-400 font-semibold text-lg">Conteúdos Personalizados</h3>
+              <p>Receba artigos, vídeos e dicas com base no seu perfil: {perfil}.</p>
+            </div>
+          </div>
+        </section>
+      )}
+    </main>
+  )
+}
+
+
