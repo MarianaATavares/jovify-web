@@ -1,24 +1,4 @@
-'use client'
-
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-
-export default function Home() {
-  const router = useRouter()
-
-  const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home'>('inicio')
-  const [nome, setNome] = useState('')
-  const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
-  const [perfil, setPerfil] = useState<string | null>(null)
-
-  const handleChange = (index: number, value: number) => {
-    const novasRespostas = [...respostas]
-    novasRespostas[index] = value
-    setRespostas(novasRespostas)
-  }
-
-  const calcularPerfil = () => {
-    const soma = respostas.reduce((a, b) => a + b, 0)
+reduce((a, b) => a + b, 0)
     if (soma < 12) return 'Empático'
     if (soma < 20) return 'Guardião'
     if (soma < 28) return 'Estratégico'
