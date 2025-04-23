@@ -1,3 +1,6 @@
+Perfeito, vou manter o layout exatamente como está e apenas adicionar os botões de "Voltar" com a lógica de histórico de navegação. Aqui está o código completo com essa funcionalidade integrada:
+
+```tsx
 'use client'
 
 import { useState } from 'react'
@@ -7,9 +10,24 @@ export default function Home() {
   const router = useRouter()
 
   const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home'>('inicio')
+  const [historico, setHistorico] = useState<string[]>([])
   const [nome, setNome] = useState('')
   const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
   const [perfil, setPerfil] = useState<string | null>(null)
+
+  const avancar = (proximoStep: typeof step) => {
+    setHistorico([...historico, step])
+    setStep(proximoStep)
+  }
+
+  const voltar = () => {
+    const novoHistorico = [...historico]
+    const passoAnterior = novoHistorico.pop()
+    if (passoAnterior) {
+      setStep(passoAnterior as typeof step)
+      setHistorico(novoHistorico)
+    }
+  }
 
   const handleChange = (index: number, value: number) => {
     const novasRespostas = [...respostas]
@@ -54,7 +72,7 @@ export default function Home() {
   const enviarRespostas = () => {
     const perfilCalculado = calcularPerfil()
     setPerfil(perfilCalculado)
-    setStep('resultado')
+    avancar('resultado')
   }
 
   return (
@@ -63,7 +81,7 @@ export default function Home() {
         <section className="text-center space-y-6">
           <h1 className="text-4xl font-bold text-green-400">Bem-vindo à Jovify</h1>
           <p className="text-zinc-300">Descubra seu perfil e desbloqueie funções exclusivas para o seu desenvolvimento!</p>
-          <button onClick={() => setStep('cadastro')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
+          <button onClick={() => avancar('cadastro')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
             Começar
           </button>
           <div className="mt-6 flex justify-center gap-4 text-sm text-zinc-400">
@@ -86,11 +104,12 @@ export default function Home() {
             className="w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700"
           />
           <button
-            onClick={() => nome.trim() !== '' && setStep('autoconhecimento')}
+            onClick={() => nome.trim() !== '' && avancar('autoconhecimento')}
             className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition"
           >
             Avançar
           </button>
+          <button onClick={voltar} className="text-sm text-zinc-400 hover:text-white mt-2">← Voltar</button>
         </section>
       )}
 
@@ -116,6 +135,7 @@ export default function Home() {
           >
             Ver meu perfil
           </button>
+          <button onClick={voltar} className="text-sm text-zinc-400 hover:text-white mt-2">← Voltar</button>
         </section>
       )}
 
@@ -125,11 +145,12 @@ export default function Home() {
           <p className="text-xl text-white">Seu perfil é: <span className="text-green-400 font-semibold">{perfil}</span></p>
           <p className="text-zinc-300">{getDescricaoPerfil(perfil)}</p>
           <button
-            onClick={() => setStep('boasVindas')}
+            onClick={() => avancar('boasVindas')}
             className="mt-4 bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition"
           >
             Acessar Funções Especiais
           </button>
+          <button onClick={voltar} className="text-sm text-zinc-400 hover:text-white mt-2">← Voltar</button>
         </section>
       )}
 
@@ -148,11 +169,12 @@ export default function Home() {
             </ul>
           </div>
           <button
-            onClick={() => setStep('home')}
+            onClick={() => avancar('home')}
             className="bg-green-500 hover:bg-green-600 text-black font-bold py-2 w-full rounded transition"
           >
             Ir para a Página Inicial
           </button>
+          <button onClick={voltar} className="text-sm text-zinc-400 hover:text-white mt-2">← Voltar</button>
         </section>
       )}
 
@@ -186,3 +208,4 @@ export default function Home() {
     </main>
   )
 }
+```
