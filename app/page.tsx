@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 export default function Home() {
   const router = useRouter()
 
-  const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home'>('inicio')
+  const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas'>('inicio')
   const [nome, setNome] = useState('')
   const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
   const [perfil, setPerfil] = useState<string | null>(null)
@@ -66,6 +66,12 @@ export default function Home() {
           <button onClick={() => setStep('cadastro')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
             Começar
           </button>
+          <div className="mt-6 flex justify-center gap-4 text-sm text-zinc-400">
+            <a href="https://instagram.com/thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">Instagram</a>
+            <a href="https://youtube.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">YouTube</a>
+            <a href="mailto:sacjovify@gmail.com" className="hover:text-green-400">Email</a>
+            <a href="https://tiktok.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">TikTok</a>
+          </div>
         </section>
       )}
 
@@ -154,13 +160,13 @@ export default function Home() {
         <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
           <h2 className="text-3xl font-bold text-green-400 text-center">Home - Bem-vindo, {nome}!</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-zinc-300">
-            <div onClick={() => router.push('/trilhas')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+            <div onClick={() => setStep('trilhas')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
               <h3 className="text-green-400 font-semibold text-lg">Trilhas de Autodesenvolvimento</h3>
               <p>Acesse conteúdos e desafios personalizados para evoluir continuamente.</p>
             </div>
-            <div onClick={() => router.push('/nova-trilha')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
-              <h3 className="text-green-400 font-semibold text-lg">Criar Nova Trilha</h3>
-              <p>Monte sua própria trilha de desenvolvimento com etapas personalizadas.</p>
+            <div onClick={() => router.push('/psicologo')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+              <h3 className="text-green-400 font-semibold text-lg">Sessões com Psicólogos</h3>
+              <p>Agende conversas com nossos especialistas parceiros para cuidar da sua mente.</p>
             </div>
             <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
               <h3 className="text-green-400 font-semibold text-lg">Mensagens Diárias</h3>
@@ -175,6 +181,46 @@ export default function Home() {
               <p>Receba artigos, vídeos e dicas com base no seu perfil: {perfil}.</p>
             </div>
           </div>
+        </section>
+      )}
+
+      {step === 'trilhas' && perfil && (
+        <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6 text-zinc-300">
+          <h2 className="text-3xl font-bold text-green-400 text-center">Trilhas para o perfil: {perfil}</h2>
+          {perfil === 'Empático' && (
+            <ul className="space-y-3 list-disc list-inside">
+              <li>Desenvolva habilidades de escuta ativa e empatia com cursos gratuitos.</li>
+              <li>Participe de grupos de apoio ou voluntariado para exercitar seu dom.</li>
+              <li>Pratique meditação e atenção plena para manter o equilíbrio emocional.</li>
+            </ul>
+          )}
+          {perfil === 'Guardião' && (
+            <ul className="space-y-3 list-disc list-inside">
+              <li>Explore ferramentas de produtividade e organização pessoal.</li>
+              <li>Invista em cursos sobre liderança de processos e gestão de tempo.</li>
+              <li>Pratique equilíbrio entre vida pessoal e profissional.</li>
+            </ul>
+          )}
+          {perfil === 'Estratégico' && (
+            <ul className="space-y-3 list-disc list-inside">
+              <li>Faça trilhas sobre resolução de problemas e pensamento crítico.</li>
+              <li>Leia sobre tomada de decisão e modelos mentais.</li>
+              <li>Desafie-se com projetos práticos e simulações.</li>
+            </ul>
+          )}
+          {perfil === 'Pioneiro' && (
+            <ul className="space-y-3 list-disc list-inside">
+              <li>Crie projetos inovadores e compartilhe com a comunidade Jovify.</li>
+              <li>Explore ferramentas de design thinking e startups enxutas.</li>
+              <li>Desenvolva suas soft skills de liderança e influência.</li>
+            </ul>
+          )}
+          <button
+            onClick={() => setStep('home')}
+            className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition"
+          >
+            Voltar para Home
+          </button>
         </section>
       )}
     </main>
