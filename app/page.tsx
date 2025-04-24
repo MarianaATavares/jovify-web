@@ -59,13 +59,67 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white">
-      {/* ... todas as etapas anteriores ... */}
+      {step === 'inicio' && (
+        <section className="text-center space-y-4">
+          <h1 className="text-4xl font-bold text-green-400">Bem-vindo à Jovify!</h1>
+          <button onClick={() => setStep('cadastro')} className="bg-green-600 hover:bg-green-700 px-6 py-2 rounded font-semibold text-black">
+            Começar
+          </button>
+        </section>
+      )}
+
+      {step === 'cadastro' && (
+        <section className="space-y-4">
+          <h2 className="text-2xl text-green-400">Qual seu nome?</h2>
+          <input
+            type="text"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            className="px-4 py-2 rounded text-black w-full"
+            placeholder="Digite seu nome"
+          />
+          <button onClick={() => setStep('autoconhecimento')} className="bg-green-600 hover:bg-green-700 px-6 py-2 rounded font-semibold text-black">
+            Avançar
+          </button>
+        </section>
+      )}
+
+      {step === 'autoconhecimento' && (
+        <section className="space-y-6">
+          <h2 className="text-2xl text-green-400 text-center">Responda às perguntas</h2>
+          {perguntas.map((pergunta, index) => (
+            <div key={index} className="space-y-2">
+              <p>{pergunta}</p>
+              <input
+                type="range"
+                min={0}
+                max={4}
+                value={respostas[index]}
+                onChange={(e) => handleChange(index, parseInt(e.target.value))}
+                className="w-full"
+              />
+            </div>
+          ))}
+          <button onClick={enviarRespostas} className="bg-green-600 hover:bg-green-700 px-6 py-2 rounded font-semibold text-black w-full">
+            Ver Resultado
+          </button>
+        </section>
+      )}
+
+      {step === 'resultado' && perfil && (
+        <section className="space-y-6 text-center">
+          <h2 className="text-3xl font-bold text-green-400">Seu perfil é: {perfil}</h2>
+          <p>{getDescricaoPerfil(perfil)}</p>
+          <button onClick={() => setStep('trilhas')} className="bg-green-600 hover:bg-green-700 px-6 py-2 rounded font-semibold text-black">
+            Ver Trilhas de Desenvolvimento
+          </button>
+        </section>
+      )}
 
       {step === 'trilhas' && perfil && (
         <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6 text-zinc-300">
           <h2 className="text-3xl font-bold text-green-400 text-center">Trilhas para o perfil: {perfil}</h2>
 
-          {/* EMPÁTICO */}
           {perfil === 'Empático' && (
             <div>
               <h3 className="text-lg font-semibold text-green-400">Dicas para o seu perfil</h3>
@@ -74,16 +128,15 @@ export default function Home() {
                 <li>Participe de grupos de apoio ou voluntariado para exercitar seu dom.</li>
                 <li>Pratique meditação e atenção plena para manter o equilíbrio emocional.</li>
               </ul>
-              <h3 className="text-lg font-semibold text-green-400">Hobbies que ajudam a reduzir a ansiedade:</h3>
+              <h3 className="text-lg font-semibold text-green-400">Hobbies recomendados:</h3>
               <ul className="space-y-3 list-disc list-inside">
-                <li>Meditação guiada e yoga suave.</li>
-                <li>Escrever cartas ou manter um diário de gratidão.</li>
-                <li>Ouvir músicas calmas ou sons da natureza.</li>
+                <li>Praticar yoga ou meditação.</li>
+                <li>Escrever um diário de reflexões pessoais.</li>
+                <li>Voluntariar-se em ONGs ou ações comunitárias.</li>
               </ul>
             </div>
           )}
 
-          {/* GUARDIÃO */}
           {perfil === 'Guardião' && (
             <div>
               <h3 className="text-lg font-semibold text-green-400">Dicas para o seu perfil</h3>
@@ -92,16 +145,15 @@ export default function Home() {
                 <li>Invista em cursos sobre liderança de processos e gestão de tempo.</li>
                 <li>Pratique equilíbrio entre vida pessoal e profissional.</li>
               </ul>
-              <h3 className="text-lg font-semibold text-green-400">Hobbies que ajudam a reduzir a ansiedade:</h3>
+              <h3 className="text-lg font-semibold text-green-400">Hobbies recomendados:</h3>
               <ul className="space-y-3 list-disc list-inside">
-                <li>Jardinagem ou cuidados com plantas.</li>
-                <li>Organizar espaços (como gavetas ou armários).</li>
-                <li>Fazer trilhas ou caminhadas leves em ambientes naturais.</li>
+                <li>Organizar eventos para a comunidade.</li>
+                <li>Praticar jardinagem ou manutenção de espaços.</li>
+                <li>Estudar sobre finanças pessoais e investimentos.</li>
               </ul>
             </div>
           )}
 
-          {/* ESTRATÉGICO */}
           {perfil === 'Estratégico' && (
             <div>
               <h3 className="text-lg font-semibold text-green-400">Dicas para o seu perfil</h3>
@@ -110,16 +162,15 @@ export default function Home() {
                 <li>Leia sobre tomada de decisão e modelos mentais.</li>
                 <li>Desafie-se com projetos práticos e simulações.</li>
               </ul>
-              <h3 className="text-lg font-semibold text-green-400">Hobbies que ajudam a reduzir a ansiedade:</h3>
+              <h3 className="text-lg font-semibold text-green-400">Hobbies recomendados:</h3>
               <ul className="space-y-3 list-disc list-inside">
-                <li>Montar quebra-cabeças ou jogar jogos de lógica relaxantes.</li>
-                <li>Ouvir podcasts enquanto caminha ao ar livre.</li>
-                <li>Aprender algo novo em ritmo leve (como culinária ou desenho).</li>
+                <li>Participar de hackathons e competições de programação.</li>
+                <li>Estudar novas tecnologias e ferramentas de produtividade.</li>
+                <li>Praticar debates e discussões sobre temas complexos.</li>
               </ul>
             </div>
           )}
 
-          {/* PIONEIRO */}
           {perfil === 'Pioneiro' && (
             <div>
               <h3 className="text-lg font-semibold text-green-400">Dicas para o seu perfil</h3>
@@ -128,11 +179,11 @@ export default function Home() {
                 <li>Explore ferramentas de design thinking e startups enxutas.</li>
                 <li>Desenvolva suas soft skills de liderança e influência.</li>
               </ul>
-              <h3 className="text-lg font-semibold text-green-400">Hobbies que ajudam a reduzir a ansiedade:</h3>
+              <h3 className="text-lg font-semibold text-green-400">Hobbies recomendados:</h3>
               <ul className="space-y-3 list-disc list-inside">
-                <li>Pintura intuitiva ou arte livre sem regras.</li>
-                <li>Caminhadas criativas: sair sem destino para observar e pensar.</li>
-                <li>Explorar playlists de música instrumental e ambientes relaxantes.</li>
+                <li>Iniciar um blog ou canal de conteúdo sobre inovação.</li>
+                <li>Participar de meetups e eventos de networking com empreendedores.</li>
+                <li>Desenvolver projetos de startup e buscar financiamento.</li>
               </ul>
             </div>
           )}
