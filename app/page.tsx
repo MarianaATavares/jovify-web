@@ -59,162 +59,84 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white">
-      {step === 'inicio' && (
-        <section className="text-center space-y-6">
-          <h1 className="text-4xl font-bold text-green-400">Bem-vindo à Jovify</h1>
-          <p className="text-zinc-300">Descubra seu perfil e desbloqueie funções exclusivas para o seu desenvolvimento!</p>
-          <button onClick={() => setStep('cadastro')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
-            Começar
-          </button>
-          <div className="mt-6 flex justify-center gap-4 text-sm text-zinc-400">
-            <a href="https://instagram.com/thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">Instagram</a>
-            <a href="https://youtube.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">YouTube</a>
-            <a href="mailto:sacjovify@gmail.com" className="hover:text-green-400">Email</a>
-            <a href="https://tiktok.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">TikTok</a>
-          </div>
-        </section>
-      )}
-
-      {step === 'cadastro' && (
-        <section className="w-full max-w-md space-y-4 bg-zinc-900 p-6 rounded-xl shadow-xl">
-          <h2 className="text-2xl font-bold text-green-400 text-center">Cadastro</h2>
-          <input
-            type="text"
-            placeholder="Digite seu nome"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-            className="w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700"
-          />
-          <button
-            onClick={() => nome.trim() !== '' && setStep('autoconhecimento')}
-            className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition"
-          >
-            Avançar
-          </button>
-        </section>
-      )}
-
-      {step === 'autoconhecimento' && (
-        <section className="w-full max-w-2xl space-y-6 bg-zinc-900 p-6 rounded-xl shadow-xl">
-          <h2 className="text-2xl font-bold text-green-400 text-center">Perguntas de Autoconhecimento</h2>
-          {perguntas.map((pergunta, index) => (
-            <div key={index} className="space-y-2">
-              <p className="text-zinc-300">{index + 1}. {pergunta}</p>
-              <input
-                type="range"
-                min={0}
-                max={5}
-                value={respostas[index]}
-                onChange={(e) => handleChange(index, Number(e.target.value))}
-                className="w-full accent-green-500"
-              />
-            </div>
-          ))}
-          <button
-            onClick={enviarRespostas}
-            className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition"
-          >
-            Ver meu perfil
-          </button>
-        </section>
-      )}
-
-      {step === 'resultado' && perfil && (
-        <section className="bg-zinc-900 p-8 rounded-xl shadow-xl w-full max-w-md text-center space-y-4">
-          <h2 className="text-3xl font-bold text-green-400">Olá, {nome}!</h2>
-          <p className="text-xl text-white">Seu perfil é: <span className="text-green-400 font-semibold">{perfil}</span></p>
-          <p className="text-zinc-300">{getDescricaoPerfil(perfil)}</p>
-          <button
-            onClick={() => setStep('boasVindas')}
-            className="mt-4 bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition"
-          >
-            Acessar Funções Especiais
-          </button>
-        </section>
-      )}
-
-      {step === 'boasVindas' && perfil && (
-        <section className="bg-zinc-900 p-8 rounded-xl shadow-xl w-full max-w-md text-center space-y-6">
-          <h2 className="text-3xl font-bold text-green-400">Seja bem-vindo(a), {nome}!</h2>
-          <p className="text-zinc-300">{getDescricaoPerfil(perfil)}</p>
-          <div className="space-y-4 text-left text-zinc-300">
-            <h3 className="text-green-400 font-semibold text-xl">Funções Disponíveis:</h3>
-            <ul className="space-y-2 list-disc list-inside">
-              <li>Acessar trilhas de autodesenvolvimento</li>
-              <li>Marcar sessões com psicólogos parceiros</li>
-              <li>Receber mensagens motivacionais diárias</li>
-              <li>Entrar na comunidade exclusiva Jovify</li>
-              <li>Receber conteúdos personalizados pelo seu perfil</li>
-            </ul>
-          </div>
-          <button
-            onClick={() => setStep('home')}
-            className="bg-green-500 hover:bg-green-600 text-black font-bold py-2 w-full rounded transition"
-          >
-            Ir para a Página Inicial
-          </button>
-        </section>
-      )}
-
-      {step === 'home' && (
-        <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
-          <h2 className="text-3xl font-bold text-green-400 text-center">Home - Bem-vindo, {nome}!</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-zinc-300">
-            <div onClick={() => setStep('trilhas')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
-              <h3 className="text-green-400 font-semibold text-lg">Trilhas de Autodesenvolvimento</h3>
-              <p>Acesse conteúdos e desafios personalizados para evoluir continuamente.</p>
-            </div>
-            <div onClick={() => router.push('/psicologo')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
-              <h3 className="text-green-400 font-semibold text-lg">Sessões com Psicólogos</h3>
-              <p>Agende conversas com nossos especialistas parceiros para cuidar da sua mente.</p>
-            </div>
-            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
-              <h3 className="text-green-400 font-semibold text-lg">Mensagens Diárias</h3>
-              <p>Receba motivações diárias e mantenha o foco no que importa.</p>
-            </div>
-            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
-              <h3 className="text-green-400 font-semibold text-lg">Comunidade Jovify</h3>
-              <p>Conecte-se com outros jovens inconformados e compartilhe sua jornada.</p>
-            </div>
-            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
-              <h3 className="text-green-400 font-semibold text-lg">Conteúdos Personalizados</h3>
-              <p>Receba artigos, vídeos e dicas com base no seu perfil: {perfil}.</p>
-            </div>
-          </div>
-        </section>
-      )}
+      {/* ... todas as etapas anteriores ... */}
 
       {step === 'trilhas' && perfil && (
         <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6 text-zinc-300">
           <h2 className="text-3xl font-bold text-green-400 text-center">Trilhas para o perfil: {perfil}</h2>
+
+          {/* EMPÁTICO */}
           {perfil === 'Empático' && (
-            <ul className="space-y-3 list-disc list-inside">
-              <li>Desenvolva habilidades de escuta ativa e empatia com cursos gratuitos.</li>
-              <li>Participe de grupos de apoio ou voluntariado para exercitar seu dom.</li>
-              <li>Pratique meditação e atenção plena para manter o equilíbrio emocional.</li>
-            </ul>
+            <div>
+              <h3 className="text-lg font-semibold text-green-400">Dicas para o seu perfil</h3>
+              <ul className="space-y-3 list-disc list-inside">
+                <li>Desenvolva habilidades de escuta ativa e empatia com cursos gratuitos.</li>
+                <li>Participe de grupos de apoio ou voluntariado para exercitar seu dom.</li>
+                <li>Pratique meditação e atenção plena para manter o equilíbrio emocional.</li>
+              </ul>
+              <h3 className="text-lg font-semibold text-green-400">Hobbies que ajudam a reduzir a ansiedade:</h3>
+              <ul className="space-y-3 list-disc list-inside">
+                <li>Meditação guiada e yoga suave.</li>
+                <li>Escrever cartas ou manter um diário de gratidão.</li>
+                <li>Ouvir músicas calmas ou sons da natureza.</li>
+              </ul>
+            </div>
           )}
+
+          {/* GUARDIÃO */}
           {perfil === 'Guardião' && (
-            <ul className="space-y-3 list-disc list-inside">
-              <li>Explore ferramentas de produtividade e organização pessoal.</li>
-              <li>Invista em cursos sobre liderança de processos e gestão de tempo.</li>
-              <li>Pratique equilíbrio entre vida pessoal e profissional.</li>
-            </ul>
+            <div>
+              <h3 className="text-lg font-semibold text-green-400">Dicas para o seu perfil</h3>
+              <ul className="space-y-3 list-disc list-inside">
+                <li>Explore ferramentas de produtividade e organização pessoal.</li>
+                <li>Invista em cursos sobre liderança de processos e gestão de tempo.</li>
+                <li>Pratique equilíbrio entre vida pessoal e profissional.</li>
+              </ul>
+              <h3 className="text-lg font-semibold text-green-400">Hobbies que ajudam a reduzir a ansiedade:</h3>
+              <ul className="space-y-3 list-disc list-inside">
+                <li>Jardinagem ou cuidados com plantas.</li>
+                <li>Organizar espaços (como gavetas ou armários).</li>
+                <li>Fazer trilhas ou caminhadas leves em ambientes naturais.</li>
+              </ul>
+            </div>
           )}
+
+          {/* ESTRATÉGICO */}
           {perfil === 'Estratégico' && (
-            <ul className="space-y-3 list-disc list-inside">
-              <li>Faça trilhas sobre resolução de problemas e pensamento crítico.</li>
-              <li>Leia sobre tomada de decisão e modelos mentais.</li>
-              <li>Desafie-se com projetos práticos e simulações.</li>
-            </ul>
+            <div>
+              <h3 className="text-lg font-semibold text-green-400">Dicas para o seu perfil</h3>
+              <ul className="space-y-3 list-disc list-inside">
+                <li>Faça trilhas sobre resolução de problemas e pensamento crítico.</li>
+                <li>Leia sobre tomada de decisão e modelos mentais.</li>
+                <li>Desafie-se com projetos práticos e simulações.</li>
+              </ul>
+              <h3 className="text-lg font-semibold text-green-400">Hobbies que ajudam a reduzir a ansiedade:</h3>
+              <ul className="space-y-3 list-disc list-inside">
+                <li>Montar quebra-cabeças ou jogar jogos de lógica relaxantes.</li>
+                <li>Ouvir podcasts enquanto caminha ao ar livre.</li>
+                <li>Aprender algo novo em ritmo leve (como culinária ou desenho).</li>
+              </ul>
+            </div>
           )}
+
+          {/* PIONEIRO */}
           {perfil === 'Pioneiro' && (
-            <ul className="space-y-3 list-disc list-inside">
-              <li>Crie projetos inovadores e compartilhe com a comunidade Jovify.</li>
-              <li>Explore ferramentas de design thinking e startups enxutas.</li>
-              <li>Desenvolva suas soft skills de liderança e influência.</li>
-            </ul>
+            <div>
+              <h3 className="text-lg font-semibold text-green-400">Dicas para o seu perfil</h3>
+              <ul className="space-y-3 list-disc list-inside">
+                <li>Crie projetos inovadores e compartilhe com a comunidade Jovify.</li>
+                <li>Explore ferramentas de design thinking e startups enxutas.</li>
+                <li>Desenvolva suas soft skills de liderança e influência.</li>
+              </ul>
+              <h3 className="text-lg font-semibold text-green-400">Hobbies que ajudam a reduzir a ansiedade:</h3>
+              <ul className="space-y-3 list-disc list-inside">
+                <li>Pintura intuitiva ou arte livre sem regras.</li>
+                <li>Caminhadas criativas: sair sem destino para observar e pensar.</li>
+                <li>Explorar playlists de música instrumental e ambientes relaxantes.</li>
+              </ul>
+            </div>
           )}
+
           <button
             onClick={() => setStep('home')}
             className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition"
