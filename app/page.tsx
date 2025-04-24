@@ -66,12 +66,6 @@ export default function Home() {
           <button onClick={() => setStep('cadastro')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
             Começar
           </button>
-          <div className="mt-6 flex justify-center gap-4 text-sm text-zinc-400">
-            <a href="https://instagram.com/thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">Instagram</a>
-            <a href="https://youtube.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">YouTube</a>
-            <a href="mailto:sacjovify@gmail.com" className="hover:text-green-400">Email</a>
-            <a href="https://tiktok.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">TikTok</a>
-          </div>
         </section>
       )}
 
@@ -164,9 +158,9 @@ export default function Home() {
               <h3 className="text-green-400 font-semibold text-lg">Trilhas de Autodesenvolvimento</h3>
               <p>Acesse conteúdos e desafios personalizados para evoluir continuamente.</p>
             </div>
-            <div onClick={() => router.push('/psicologo')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
-              <h3 className="text-green-400 font-semibold text-lg">Sessões com Psicólogos</h3>
-              <p>Agende conversas com nossos especialistas parceiros para cuidar da sua mente.</p>
+            <div onClick={() => router.push('/nova-trilha')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+              <h3 className="text-green-400 font-semibold text-lg">Criar Nova Trilha</h3>
+              <p>Monte sua própria trilha de desenvolvimento com etapas personalizadas.</p>
             </div>
             <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
               <h3 className="text-green-400 font-semibold text-lg">Mensagens Diárias</h3>
