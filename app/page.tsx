@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -84,7 +84,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white">
-      
+
       {history.length > 0 && (
         <button onClick={goBack} className="absolute top-4 left-4 bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-4 rounded transition">
           Voltar
@@ -101,7 +101,7 @@ export default function Home() {
         </section>
       )}
 
-      {/* (outros steps seguem normais) */}
+      {/* Outros steps podem ser adicionados aqui conforme necessário */}
 
       {step === 'conteudosPersonalizados' && perfil && (
         <section className="page space-y-6">
