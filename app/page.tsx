@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -84,7 +84,7 @@ export default function Home() {
       'Como evitar a autossabotagem.',
       'Reciclar falsas crenças limitantes.',
       'Diminuir a necessidade de perfeição.',
-      'Estratégias para manter a motivação alta.',
+      'Estratégias para manter a motivação alta.'
     ]
   }
 
@@ -93,6 +93,10 @@ export default function Home() {
     setPerfil(perfilCalculado)
     setStep('resultado')
   }
+
+  const inputClass = "w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700"
+  const btnPrimaryClass = "bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition"
+  const cardClass = "bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 cursor-pointer transition text-center font-semibold"
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white">
@@ -109,12 +113,14 @@ export default function Home() {
 
       {step === 'cadastro' && (
         <section className="space-y-4 w-full max-w-md">
-          <input type="text" placeholder="Nome completo" value={nome} onChange={(e) => setNome(e.target.value)} className="input" />
-          <input type="text" placeholder="CPF" value={cpf} onChange={(e) => setCpf(e.target.value)} className="input" />
-          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="input" />
-          <input type="date" value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} className="input" />
-          <input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} className="input" />
-          <button onClick={() => nome.trim() !== '' && setStep('autoconhecimento')} className="btn-primary">Avançar</button>
+          <input type="text" placeholder="Nome completo" value={nome} onChange={(e) => setNome(e.target.value)} className={inputClass} />
+          <input type="text" placeholder="CPF" value={cpf} onChange={(e) => setCpf(e.target.value)} className={inputClass} />
+          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className={inputClass} />
+          <input type="date" value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} className={inputClass} />
+          <input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} className={inputClass} />
+          <button onClick={() => nome.trim() !== '' && setStep('autoconhecimento')} className={btnPrimaryClass}>
+            Avançar
+          </button>
         </section>
       )}
 
@@ -122,7 +128,7 @@ export default function Home() {
         <section className="space-y-4 w-full max-w-md text-center">
           <h2 className="text-2xl font-bold">Responda às perguntas</h2>
           {/* Aqui poderia ter inputs tipo sliders para respostas */}
-          <button onClick={handleFinalizarCadastro} className="btn-primary">Finalizar</button>
+          <button onClick={handleFinalizarCadastro} className={btnPrimaryClass}>Finalizar</button>
         </section>
       )}
 
@@ -131,7 +137,7 @@ export default function Home() {
           <h2 className="text-3xl font-bold">Olá, {nome}!</h2>
           <p className="text-xl">Seu perfil é: <span className="text-green-400 font-bold">{perfil}</span></p>
           <p>{getDescricaoPerfil(perfil)}</p>
-          <button onClick={() => setStep('home')} className="btn-primary">Acessar Plataforma</button>
+          <button onClick={() => setStep('home')} className={btnPrimaryClass}>Acessar Plataforma</button>
         </section>
       )}
 
@@ -139,11 +145,11 @@ export default function Home() {
         <section className="w-full max-w-3xl space-y-6">
           <h2 className="text-3xl font-bold text-center text-green-400">Home - Bem-vindo, {nome}!</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div onClick={() => setStep('trilhaDetalhe')} className="card">Trilhas de Autodesenvolvimento</div>
-            <div onClick={() => setStep('psicologo')} className="card">Sessões com Psicólogos</div>
-            <div onClick={() => setStep('mensagens')} className="card">Mensagens Diárias</div>
-            <div onClick={() => setStep('comunidade')} className="card">Comunidade Jovify</div>
-            <div onClick={() => setStep('conteudos')} className="card">Conteúdos Personalizados</div>
+            <div onClick={() => setStep('trilhaDetalhe')} className={cardClass}>Trilhas de Autodesenvolvimento</div>
+            <div onClick={() => setStep('psicologo')} className={cardClass}>Sessões com Psicólogos</div>
+            <div onClick={() => setStep('mensagens')} className={cardClass}>Mensagens Diárias</div>
+            <div onClick={() => setStep('comunidade')} className={cardClass}>Comunidade Jovify</div>
+            <div onClick={() => setStep('conteudos')} className={cardClass}>Conteúdos Personalizados</div>
           </div>
         </section>
       )}
@@ -156,7 +162,7 @@ export default function Home() {
               <li key={index}>{dica}</li>
             ))}
           </ul>
-          <button onClick={() => setStep('home')} className="btn-primary">Voltar</button>
+          <button onClick={() => setStep('home')} className={btnPrimaryClass}>Voltar</button>
         </section>
       )}
 
@@ -164,16 +170,16 @@ export default function Home() {
         <section className="space-y-6 w-full max-w-md text-center">
           <h2 className="text-2xl font-bold">Seja nosso Psicólogo Parceiro</h2>
           <p>Envie sua proposta + currículo para: <br/><span className="text-green-400 font-semibold">equipejovify@gmail.com</span></p>
-          <button onClick={() => setStep('home')} className="btn-primary">Voltar</button>
+          <button onClick={() => setStep('home')} className={btnPrimaryClass}>Voltar</button>
         </section>
       )}
 
       {step === 'mensagens' && (
         <section className="space-y-6 w-full max-w-md">
           <h2 className="text-2xl font-bold text-center">Receba Mensagens Diárias</h2>
-          <input type="text" placeholder="Seu celular ou email" value={contato} onChange={(e) => setContato(e.target.value)} className="input" />
-          <textarea placeholder="O que gostaria de ver mais nas mensagens?" value={sugestaoMensagem} onChange={(e) => setSugestaoMensagem(e.target.value)} className="input" />
-          <button onClick={() => setStep('home')} className="btn-primary">Enviar</button>
+          <input type="text" placeholder="Seu celular ou email" value={contato} onChange={(e) => setContato(e.target.value)} className={inputClass} />
+          <textarea placeholder="O que gostaria de ver mais nas mensagens?" value={sugestaoMensagem} onChange={(e) => setSugestaoMensagem(e.target.value)} className={inputClass} />
+          <button onClick={() => setStep('home')} className={btnPrimaryClass}>Enviar</button>
         </section>
       )}
 
@@ -181,8 +187,7 @@ export default function Home() {
         <section className="space-y-6 w-full max-w-2xl">
           <h2 className="text-2xl font-bold text-center">Comunidade Jovify - {perfil}</h2>
           <p>Conecte-se com jovens do seu perfil! Participe do chat geral ou solicite amizade para chats privados.</p>
-          {/* Aqui futuramente pode ser integrado com sockets e back-end de chat */}
-          <button onClick={() => setStep('home')} className="btn-primary">Voltar</button>
+          <button onClick={() => setStep('home')} className={btnPrimaryClass}>Voltar</button>
         </section>
       )}
 
@@ -194,15 +199,9 @@ export default function Home() {
               <li key={index}>{conteudo}</li>
             ))}
           </ul>
-          <button onClick={() => setStep('home')} className="btn-primary">Voltar</button>
+          <button onClick={() => setStep('home')} className={btnPrimaryClass}>Voltar</button>
         </section>
       )}
-
     </main>
   )
 }
-
-// Estilos Utilitários (pode colocar no Tailwind também)
-const input = "w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700"
-const btnPrimary = "bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition"
-const card = "bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 cursor-pointer transition text-center font-semibold"
