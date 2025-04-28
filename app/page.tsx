@@ -6,7 +6,13 @@ import { useRouter } from 'next/navigation'
 export default function Home() {
   const router = useRouter()
 
-  const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas'>('inicio')
+  const [step, setStep] = useState<
+    'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' |
+    'sessaoPsicologos' | 'mensagensDiarias' | 'comunidade' | 'conteudosPersonalizados'
+  >('inicio')
+
+  const [history, setHistory] = useState<string[]>([])
+
   const [nome, setNome] = useState('')
   const [cpf, setCpf] = useState('')
   const [email, setEmail] = useState('')
@@ -14,6 +20,22 @@ export default function Home() {
   const [senha, setSenha] = useState('')
   const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
   const [perfil, setPerfil] = useState<string | null>(null)
+  const [contato, setContato] = useState('')
+  const [sugestao, setSugestao] = useState('')
+
+  const navigate = (nextStep: typeof step) => {
+    setHistory((prev) => [...prev, step])
+    setStep(nextStep)
+  }
+
+  const goBack = () => {
+    setHistory((prev) => {
+      const newHistory = [...prev]
+      const previousStep = newHistory.pop()
+      if (previousStep) setStep(previousStep as typeof step)
+      return newHistory
+    })
+  }
 
   const handleChange = (index: number, value: number) => {
     const novasRespostas = [...respostas]
@@ -58,113 +80,74 @@ export default function Home() {
   const enviarRespostas = () => {
     const perfilCalculado = calcularPerfil()
     setPerfil(perfilCalculado)
-    setStep('resultado')
+    navigate('resultado')
   }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white">
+
+      {/* Botão Voltar */}
+      {history.length > 0 && (
+        <button onClick={goBack} className="absolute top-4 left-4 bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-4 rounded transition">
+          Voltar
+        </button>
+      )}
+
+      {/* início */}
       {step === 'inicio' && (
         <section className="text-center space-y-6">
           <h1 className="text-4xl font-bold text-green-400">Bem-vindo à Jovify</h1>
           <p className="text-zinc-300">Descubra seu perfil e desbloqueie funções exclusivas para o seu desenvolvimento!</p>
-          <button onClick={() => setStep('cadastro')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
+          <button onClick={() => navigate('cadastro')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
             Começar
           </button>
-          <div className="mt-6 flex justify-center gap-4 text-sm text-zinc-400">
-            <a href="https://instagram.com/thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">Instagram</a>
-            <a href="https://youtube.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">YouTube</a>
-            <a href="mailto:sacjovify@gmail.com" className="hover:text-green-400">Email</a>
-            <a href="https://tiktok.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">TikTok</a>
-          </div>
         </section>
       )}
 
+      {/* cadastro */}
       {step === 'cadastro' && (
         <section className="w-full max-w-md space-y-4 bg-zinc-900 p-6 rounded-xl shadow-xl">
           <h2 className="text-2xl font-bold text-green-400 text-center">Cadastro</h2>
-          <input
-            type="text"
-            placeholder="Digite seu nome"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-            className="w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700"
-          />
-          <input
-            type="text"
-            placeholder="Digite seu CPF"
-            value={cpf}
-            onChange={(e) => setCpf(e.target.value)}
-            className="w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700"
-          />
-          <input
-            type="email"
-            placeholder="Digite seu email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700"
-          />
-          <input
-            type="date"
-            placeholder="Digite sua data de nascimento"
-            value={dataNascimento}
-            onChange={(e) => setDataNascimento(e.target.value)}
-            className="w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700"
-          />
-          <input
-            type="password"
-            placeholder="Crie uma senha"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            className="w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700"
-          />
-          <button
-            onClick={() => nome.trim() !== '' && setStep('autoconhecimento')}
-            className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition"
-          >
+          <input type="text" placeholder="Digite seu nome" value={nome} onChange={(e) => setNome(e.target.value)} className="input" />
+          <input type="text" placeholder="Digite seu CPF" value={cpf} onChange={(e) => setCpf(e.target.value)} className="input" />
+          <input type="email" placeholder="Digite seu email" value={email} onChange={(e) => setEmail(e.target.value)} className="input" />
+          <input type="date" placeholder="Data de nascimento" value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} className="input" />
+          <input type="password" placeholder="Crie uma senha" value={senha} onChange={(e) => setSenha(e.target.value)} className="input" />
+          <button onClick={() => nome.trim() !== '' && navigate('autoconhecimento')} className="btn">
             Avançar
           </button>
         </section>
       )}
 
+      {/* autoconhecimento */}
       {step === 'autoconhecimento' && (
         <section className="w-full max-w-2xl space-y-6 bg-zinc-900 p-6 rounded-xl shadow-xl">
           <h2 className="text-2xl font-bold text-green-400 text-center">Perguntas de Autoconhecimento</h2>
           {perguntas.map((pergunta, index) => (
             <div key={index} className="space-y-2">
               <p className="text-zinc-300">{index + 1}. {pergunta}</p>
-              <input
-                type="range"
-                min={0}
-                max={5}
-                value={respostas[index]}
-                onChange={(e) => handleChange(index, Number(e.target.value))}
-                className="w-full accent-green-500"
-              />
+              <input type="range" min={0} max={5} value={respostas[index]} onChange={(e) => handleChange(index, Number(e.target.value))} className="w-full accent-green-500" />
             </div>
           ))}
-          <button
-            onClick={enviarRespostas}
-            className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition"
-          >
+          <button onClick={enviarRespostas} className="btn">
             Ver meu perfil
           </button>
         </section>
       )}
 
+      {/* resultado */}
       {step === 'resultado' && perfil && (
         <section className="bg-zinc-900 p-8 rounded-xl shadow-xl w-full max-w-md text-center space-y-4">
           <h2 className="text-3xl font-bold text-green-400">Olá, {nome}!</h2>
           <p className="text-xl text-white">Seu perfil é: <span className="text-green-400 font-semibold">{perfil}</span></p>
           <p className="text-zinc-300">{getDescricaoPerfil(perfil)}</p>
-          <button
-            onClick={() => setStep('boasVindas')}
-            className="mt-4 bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition"
-          >
+          <button onClick={() => navigate('boasVindas')} className="btn">
             Acessar Funções Especiais
           </button>
         </section>
       )}
 
+      {/* boas-vindas */}
       {step === 'boasVindas' && perfil && (
         <section className="bg-zinc-900 p-8 rounded-xl shadow-xl w-full max-w-md text-center space-y-6">
           <h2 className="text-3xl font-bold text-green-400">Seja bem-vindo(a), {nome}!</h2>
@@ -179,42 +162,73 @@ export default function Home() {
               <li>Receber conteúdos personalizados pelo seu perfil</li>
             </ul>
           </div>
-          <button
-            onClick={() => setStep('home')}
-            className="bg-green-500 hover:bg-green-600 text-black font-bold py-2 w-full rounded transition"
-          >
+          <button onClick={() => navigate('home')} className="btn">
             Ir para a Página Inicial
           </button>
         </section>
       )}
 
+      {/* home */}
       {step === 'home' && (
         <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
           <h2 className="text-3xl font-bold text-green-400 text-center">Home - Bem-vindo, {nome}!</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-zinc-300">
-            <div onClick={() => setStep('trilhas')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
-              <h3 className="text-green-400 font-semibold text-lg">Trilhas de Autodesenvolvimento</h3>
-              <p>Acesse conteúdos e desafios personalizados para evoluir continuamente.</p>
-            </div>
-            <div onClick={() => router.push('/psicologo')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
-              <h3 className="text-green-400 font-semibold text-lg">Sessões com Psicólogos</h3>
-              <p>Agende conversas com nossos especialistas parceiros para cuidar da sua mente.</p>
-            </div>
-            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
-              <h3 className="text-green-400 font-semibold text-lg">Mensagens Diárias</h3>
-              <p>Receba motivações diárias e mantenha o foco no que importa.</p>
-            </div>
-            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
-              <h3 className="text-green-400 font-semibold text-lg">Comunidade Jovify</h3>
-              <p>Conecte-se com outros jovens inconformados e compartilhe sua jornada.</p>
-            </div>
-            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
-              <h3 className="text-green-400 font-semibold text-lg">Conteúdos Personalizados</h3>
-              <p>Receba artigos, vídeos e dicas com base no seu perfil: {perfil}.</p>
-            </div>
+            <div onClick={() => navigate('trilhas')} className="card">Trilhas de Autodesenvolvimento</div>
+            <div onClick={() => navigate('sessaoPsicologos')} className="card">Sessões com Psicólogos</div>
+            <div onClick={() => navigate('mensagensDiarias')} className="card">Mensagens Diárias</div>
+            <div onClick={() => navigate('comunidade')} className="card">Comunidade Jovify</div>
+            <div onClick={() => navigate('conteudosPersonalizados')} className="card">Conteúdos Personalizados</div>
           </div>
         </section>
       )}
+
+      {/* novas telas */}
+      {step === 'trilhas' && perfil && (
+        <section className="page">
+          <h2 className="title">Dicas para seu perfil {perfil}</h2>
+          <p className="text">• Hobbies recomendados para você.</p>
+          <p className="text">• Dicas para lidar com ansiedade.</p>
+          <p className="text">• O que fazer em dias ruins.</p>
+          <p className="text">• Como fazer novas amizades.</p>
+          <p className="text">• Como evoluir nos estudos.</p>
+        </section>
+      )}
+
+      {step === 'sessaoPsicologos' && (
+        <section className="page">
+          <h2 className="title">Seja um Psicólogo Jovify!</h2>
+          <p className="text">Quer fazer parte da nossa equipe?</p>
+          <p className="text">Envie sua proposta + currículo para:</p>
+          <p className="text font-bold">equipejovify@gmail.com</p>
+        </section>
+      )}
+
+      {step === 'mensagensDiarias' && (
+        <section className="page">
+          <h2 className="title">Receba Mensagens Diárias!</h2>
+          <input type="text" placeholder="Seu celular ou email" value={contato} onChange={(e) => setContato(e.target.value)} className="input" />
+          <textarea placeholder="O que você quer ver mais nesta trilha?" value={sugestao} onChange={(e) => setSugestao(e.target.value)} className="input h-24" />
+          <button className="btn">Enviar</button>
+        </section>
+      )}
+
+      {step === 'comunidade' && (
+        <section className="page">
+          <h2 className="title">Comunidade Jovify</h2>
+          <p className="text">• Participe do chat geral do seu perfil {perfil}!</p>
+          <p className="text">• Solicite amizade e converse no privado!</p>
+        </section>
+      )}
+
+      {step === 'conteudosPersonalizados' && perfil && (
+        <section className="page">
+          <h2 className="title">Conteúdos Personalizados para {perfil}</h2>
+          <p className="text">• Como evitar a autossabotagem.</p>
+          <p className="text">• Como reciclar falsas crenças.</p>
+          <p className="text">• Como lidar com a necessidade de perfeição.</p>
+        </section>
+      )}
+
     </main>
   )
 }
