@@ -1,10 +1,8 @@
 "use client";
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 
 export default function Home() {
-  const router = useRouter()
 
   const [step, setStep] = useState<
     'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' |
@@ -12,8 +10,6 @@ export default function Home() {
   >('inicio')
 
   const [history, setHistory] = useState<string[]>([])
-  const [nome, setNome] = useState('')
-  const [cpf, setCpf] = useState('')
   const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
   const [perfil, setPerfil] = useState<string | null>(null)
   const [sugestao, setSugestao] = useState('')
@@ -32,51 +28,9 @@ export default function Home() {
     })
   }
 
-  const handleChange = (index: number, value: number) => {
-    const novasRespostas = [...respostas]
-    novasRespostas[index] = value
-    setRespostas(novasRespostas)
-  }
-
-  const calcularPerfil = () => {
-    const soma = respostas.reduce((a, b) => a + b, 0)
-    if (soma < 12) return 'Empático'
-    if (soma < 20) return 'Guardião'
-    if (soma < 28) return 'Estratégico'
-    return 'Pioneiro'
-  }
-
-  const getDescricaoPerfil = (perfil: string) => {
-    switch (perfil) {
-      case 'Empático':
-        return 'Você tem uma grande sensibilidade emocional, valoriza conexões humanas e está sempre pronto para apoiar quem precisa. Seu poder está na escuta e no acolhimento.'
-      case 'Guardião':
-        return 'Você é leal, confiável e organizado. Gosta de proteger o que é importante e se dedica com responsabilidade às suas tarefas. Um verdadeiro pilar para qualquer equipe.'
-      case 'Estratégico':
-        return 'Você pensa à frente, enxerga soluções e sabe como alcançar objetivos com inteligência. Seu raciocínio lógico e visão tática te destacam.'
-      case 'Pioneiro':
-        return 'Você é um líder nato! Ama inovação, desafiar padrões e transformar ideias em realidade. Seu espírito criativo e ousado inspira mudanças.'
-      default:
-        return ''
-    }
-  }
-
-  const perguntas = [
-    'Você se considera uma pessoa comunicativa?',
-    'Costuma planejar com antecedência suas tarefas?',
-    'Consegue entender facilmente os sentimentos dos outros?',
-    'Gosta de assumir a liderança em projetos?',
-    'Você prefere estabilidade ou mudanças constantes?',
-    'Tem facilidade em resolver problemas de forma lógica?',
-    'Valoriza relações profundas e sinceras?',
-    'Sente-se motivado por desafios e inovação?'
-  ]
-
-  const enviarRespostas = () => {
-    const perfilCalculado = calcularPerfil()
-    setPerfil(perfilCalculado)
-    navigate('resultado')
-  }
+  // Funções removidas por enquanto: 
+  // router, nome, setNome, cpf, setCpf, handleChange, getDescricaoPerfil, perguntas, enviarRespostas
+  // (pode adicioná-las depois quando precisar)
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white">
