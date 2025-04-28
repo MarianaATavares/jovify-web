@@ -1,40 +1,34 @@
 "use client";
 
-import { useState } from 'react'
+import { useState } from 'react';
 
 export default function Home() {
-
   const [step, setStep] = useState<
     'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' |
     'sessaoPsicologos' | 'mensagensDiarias' | 'comunidade' | 'conteudosPersonalizados'
-  >('Iniciar Jornada')
+  >('inicio'); // Corrigi aqui também: 'Iniciar Jornada' não existia no tipo, deve começar em 'inicio'
 
-  const [history, setHistory] = useState<string[]>([])
-  const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
-  const [perfil, setPerfil] = useState<string | null>(null)
-  const [sugestao, setSugestao] = useState('')
+  const [history, setHistory] = useState<string[]>([]);
+  const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0));
+  const [perfil, setPerfil] = useState<string | null>(null);
+  const [sugestao, setSugestao] = useState('');
 
   const navigate = (nextStep: typeof step) => {
-    setHistory((prev) => [...prev, step])
-    setStep(nextStep)
-  }
+    setHistory((prev) => [...prev, step]);
+    setStep(nextStep);
+  };
 
   const goBack = () => {
     setHistory((prev) => {
-      const newHistory = [...prev]
-      const previousStep = newHistory.pop()
-      if (previousStep) setStep(previousStep as typeof step)
-      return newHistory
-    })
-  }
-
-  // Funções removidas por enquanto: 
-  // router, nome, setNome, cpf, setCpf, handleChange, getDescricaoPerfil, perguntas, enviarRespostas
-  // (pode adicioná-las depois quando precisar)
+      const newHistory = [...prev];
+      const previousStep = newHistory.pop();
+      if (previousStep) setStep(previousStep as typeof step);
+      return newHistory;
+    });
+  };
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white">
-
       {history.length > 0 && (
         <button onClick={goBack} className="absolute top-4 left-4 bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-4 rounded transition">
           Voltar
@@ -50,8 +44,6 @@ export default function Home() {
           </button>
         </section>
       )}
-
-      {/* Outros steps podem ser adicionados aqui conforme necessário */}
 
       {step === 'conteudosPersonalizados' && perfil && (
         <section className="page space-y-6">
@@ -79,5 +71,5 @@ export default function Home() {
         </section>
       )}
     </main>
-  )
+  );
 }
