@@ -1,18 +1,15 @@
 "use client"
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 
 export default function Home() {
-  const router = useRouter()
-
   const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' | 'trilhaDetalhe' | 'psicologo' | 'mensagens' | 'comunidade' | 'conteudos'>('inicio')
   const [nome, setNome] = useState('')
   const [cpf, setCpf] = useState('')
   const [email, setEmail] = useState('')
   const [dataNascimento, setDataNascimento] = useState('')
   const [senha, setSenha] = useState('')
-  const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
+  const [respostas] = useState<number[]>(Array(8).fill(0)) // <-- remove o setRespostas
   const [perfil, setPerfil] = useState<string | null>(null)
   const [contato, setContato] = useState('')
   const [sugestaoMensagem, setSugestaoMensagem] = useState('')
@@ -127,7 +124,7 @@ export default function Home() {
       {step === 'autoconhecimento' && (
         <section className="space-y-4 w-full max-w-md text-center">
           <h2 className="text-2xl font-bold">Responda às perguntas</h2>
-          {/* Aqui poderia ter inputs tipo sliders para respostas */}
+          {/* Aqui poderiam estar os sliders ou inputs */}
           <button onClick={handleFinalizarCadastro} className={btnPrimaryClass}>Finalizar</button>
         </section>
       )}
