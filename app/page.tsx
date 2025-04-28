@@ -9,7 +9,7 @@ export default function Home() {
   const [step, setStep] = useState<
     'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' |
     'sessaoPsicologos' | 'mensagensDiarias' | 'comunidade' | 'conteudosPersonalizados'
-  >('inicio')
+  >('Iniciar Jornada')
 
   const [history, setHistory] = useState<string[]>([])
   const [nome, setNome] = useState('')
