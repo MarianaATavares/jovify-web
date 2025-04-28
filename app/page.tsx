@@ -9,17 +9,13 @@ export default function Home() {
   const [step, setStep] = useState<
     'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' |
     'sessaoPsicologos' | 'mensagensDiarias' | 'comunidade' | 'conteudosPersonalizados'
-  >('Iniciar Jornada')
+  >('inicio')
 
   const [history, setHistory] = useState<string[]>([])
   const [nome, setNome] = useState('')
   const [cpf, setCpf] = useState('')
-  const [email, setEmail] = useState('')
-  const [dataNascimento, setDataNascimento] = useState('')
-  const [senha, setSenha] = useState('')
   const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
   const [perfil, setPerfil] = useState<string | null>(null)
-  const [contato, setContato] = useState('')
   const [sugestao, setSugestao] = useState('')
 
   const navigate = (nextStep: typeof step) => {
