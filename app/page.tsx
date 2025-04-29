@@ -1,18 +1,27 @@
-"use client"
+'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
-  const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' | 'trilhaDetalhe' | 'psicologo' | 'mensagens' | 'comunidade' | 'conteudos'>('inicio')
+  const router = useRouter()
+
+  const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' | 'sessaoPsicologo' | 'mensagensDiarias' | 'comunidade' | 'conteudosPersonalizados'>('inicio')
   const [nome, setNome] = useState('')
   const [cpf, setCpf] = useState('')
   const [email, setEmail] = useState('')
   const [dataNascimento, setDataNascimento] = useState('')
   const [senha, setSenha] = useState('')
-  const [respostas] = useState<number[]>(Array(8).fill(0)) // <-- remove o setRespostas
+  const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
   const [perfil, setPerfil] = useState<string | null>(null)
   const [contato, setContato] = useState('')
-  const [sugestaoMensagem, setSugestaoMensagem] = useState('')
+  const [sugestao, setSugestao] = useState('')
+
+  const handleChange = (index: number, value: number) => {
+    const novasRespostas = [...respostas]
+    novasRespostas[index] = value
+    setRespostas(novasRespostas)
+  }
 
   const calcularPerfil = () => {
     const soma = respostas.reduce((a, b) => a + b, 0)
@@ -25,178 +34,143 @@ export default function Home() {
   const getDescricaoPerfil = (perfil: string) => {
     switch (perfil) {
       case 'Empático':
-        return 'Você tem uma grande sensibilidade emocional, valoriza conexões humanas e está sempre pronto para apoiar quem precisa.'
+        return 'Você tem uma grande sensibilidade emocional...'
       case 'Guardião':
-        return 'Você é leal, confiável e organizado. Gosta de proteger o que é importante e se dedica com responsabilidade às suas tarefas.'
+        return 'Você é leal, confiável e organizado...'
       case 'Estratégico':
-        return 'Você pensa à frente, enxerga soluções e sabe como alcançar objetivos com inteligência.'
+        return 'Você pensa à frente, enxerga soluções...'
       case 'Pioneiro':
-        return 'Você é um líder nato! Ama inovação, desafiar padrões e transformar ideias em realidade.'
+        return 'Você é um líder nato! Ama inovação...'
       default:
         return ''
     }
   }
 
-  const getDicasTrilha = (perfil: string) => {
-    switch (perfil) {
-      case 'Empático':
-        return [
-          'Hobbies: Pintura, meditação, escrita emocional.',
-          'Evitar ansiedade: Praticar mindfulness diariamente.',
-          'Dias ruins: Escutar músicas calmas e escrever sentimentos.',
-          'Amizades: Participar de grupos de apoio e voluntariado.',
-          'Evoluir nos estudos: Estudar com grupos para maior engajamento.'
-        ]
-      case 'Guardião':
-        return [
-          'Hobbies: Jardinagem, organização de eventos, culinária.',
-          'Evitar ansiedade: Planejar tarefas antecipadamente.',
-          'Dias ruins: Fazer checklists simples para retomar controle.',
-          'Amizades: Círculos de atividades planejadas como clubes de leitura.',
-          'Evoluir nos estudos: Mapas mentais e resumos organizados.'
-        ]
-      case 'Estratégico':
-        return [
-          'Hobbies: Xadrez, jogos de estratégia, debates.',
-          'Evitar ansiedade: Criar planos de ação para problemas.',
-          'Dias ruins: Analisar e aprender com o que não funcionou.',
-          'Amizades: Grupos de estudo ou debates.',
-          'Evoluir nos estudos: Análises SWOT dos temas de estudo.'
-        ]
-      case 'Pioneiro':
-        return [
-          'Hobbies: Startups, design thinking, hackathons.',
-          'Evitar ansiedade: Relembrar objetivos e metas pessoais.',
-          'Dias ruins: Brainstorm de novas ideias para projetos.',
-          'Amizades: Comunidades de inovação e empreendedorismo.',
-          'Evoluir nos estudos: Cursos práticos e bootcamps rápidos.'
-        ]
-      default:
-        return []
-    }
-  }
-
-  const getConteudosPersonalizados = (perfil: string) => {
-    return [
-      'Como evitar a autossabotagem.',
-      'Reciclar falsas crenças limitantes.',
-      'Diminuir a necessidade de perfeição.',
-      'Estratégias para manter a motivação alta.'
+  const dicasPorPerfil: Record<string, string[]> = {
+    'Empático': [
+      'Explore hobbies artísticos como pintura ou escrita.',
+      'Pratique meditação para aliviar a ansiedade.',
+      'Converse com amigos próximos em dias difíceis.',
+      'Participe de grupos sociais para novas amizades.',
+      'Crie mapas mentais para estudar com mais leveza.'
+    ],
+    'Guardião': [
+      'Organize sua rotina com listas e metas.',
+      'Evite sobrecarga delegando tarefas quando possível.',
+      'Reserve tempo para autocuidado.',
+      'Inicie conversas com interesses comuns para novas amizades.',
+      'Crie cronogramas de estudos com pausas.'
+    ],
+    'Estratégico': [
+      'Busque hobbies que envolvam lógica ou estratégia.',
+      'Use técnicas de respiração para controlar ansiedade.',
+      'Analise o que está te incomodando em dias ruins.',
+      'Participe de clubes ou fóruns de debate.',
+      'Use flashcards ou quizzes para otimizar estudos.'
+    ],
+    'Pioneiro': [
+      'Experimente novos projetos criativos.',
+      'Desconecte-se e pratique atividades físicas.',
+      'Escreva ideias ou projetos em dias difíceis.',
+      'Crie eventos ou participe de grupos inovadores.',
+      'Explore cursos online sobre temas que ama.'
     ]
   }
 
-  const handleFinalizarCadastro = () => {
+  const enviarRespostas = () => {
     const perfilCalculado = calcularPerfil()
     setPerfil(perfilCalculado)
     setStep('resultado')
   }
 
-  const inputClass = "w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700"
-  const btnPrimaryClass = "bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition"
-  const cardClass = "bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 cursor-pointer transition text-center font-semibold"
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white">
-
-      {step === 'inicio' && (
-        <section className="text-center space-y-6">
-          <h1 className="text-4xl font-bold text-green-400">Bem-vindo à Jovify</h1>
-          <p className="text-zinc-300">Descubra seu perfil e desbloqueie funções exclusivas para o seu desenvolvimento!</p>
-          <button onClick={() => setStep('cadastro')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
-            Começar
-          </button>
-        </section>
-      )}
-
-      {step === 'cadastro' && (
-        <section className="space-y-4 w-full max-w-md">
-          <input type="text" placeholder="Nome completo" value={nome} onChange={(e) => setNome(e.target.value)} className={inputClass} />
-          <input type="text" placeholder="CPF" value={cpf} onChange={(e) => setCpf(e.target.value)} className={inputClass} />
-          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className={inputClass} />
-          <input type="date" value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} className={inputClass} />
-          <input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} className={inputClass} />
-          <button onClick={() => nome.trim() !== '' && setStep('autoconhecimento')} className={btnPrimaryClass}>
-            Avançar
-          </button>
-        </section>
-      )}
-
-      {step === 'autoconhecimento' && (
-        <section className="space-y-4 w-full max-w-md text-center">
-          <h2 className="text-2xl font-bold">Responda às perguntas</h2>
-          {/* Aqui poderiam estar os sliders ou inputs */}
-          <button onClick={handleFinalizarCadastro} className={btnPrimaryClass}>Finalizar</button>
-        </section>
-      )}
-
-      {step === 'resultado' && perfil && (
-        <section className="space-y-6 w-full max-w-md text-center">
-          <h2 className="text-3xl font-bold">Olá, {nome}!</h2>
-          <p className="text-xl">Seu perfil é: <span className="text-green-400 font-bold">{perfil}</span></p>
-          <p>{getDescricaoPerfil(perfil)}</p>
-          <button onClick={() => setStep('home')} className={btnPrimaryClass}>Acessar Plataforma</button>
-        </section>
-      )}
-
       {step === 'home' && (
-        <section className="w-full max-w-3xl space-y-6">
-          <h2 className="text-3xl font-bold text-center text-green-400">Home - Bem-vindo, {nome}!</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div onClick={() => setStep('trilhaDetalhe')} className={cardClass}>Trilhas de Autodesenvolvimento</div>
-            <div onClick={() => setStep('psicologo')} className={cardClass}>Sessões com Psicólogos</div>
-            <div onClick={() => setStep('mensagens')} className={cardClass}>Mensagens Diárias</div>
-            <div onClick={() => setStep('comunidade')} className={cardClass}>Comunidade Jovify</div>
-            <div onClick={() => setStep('conteudos')} className={cardClass}>Conteúdos Personalizados</div>
+        <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
+          <h2 className="text-3xl font-bold text-green-400 text-center">Home - Bem-vindo, {nome}!</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-zinc-300">
+            <div onClick={() => setStep('trilhas')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+              <h3 className="text-green-400 font-semibold text-lg">Trilhas de Autodesenvolvimento</h3>
+              <p>Acesse conteúdos e desafios personalizados para evoluir continuamente.</p>
+            </div>
+            <div onClick={() => setStep('sessaoPsicologo')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+              <h3 className="text-green-400 font-semibold text-lg">Sessões com Psicólogos</h3>
+              <p>Agende conversas com nossos especialistas parceiros para cuidar da sua mente.</p>
+            </div>
+            <div onClick={() => setStep('mensagensDiarias')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+              <h3 className="text-green-400 font-semibold text-lg">Mensagens Diárias</h3>
+              <p>Receba motivações diárias e mantenha o foco no que importa.</p>
+            </div>
+            <div onClick={() => setStep('comunidade')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+              <h3 className="text-green-400 font-semibold text-lg">Comunidade Jovify</h3>
+              <p>Conecte-se com outros jovens do mesmo perfil e compartilhe sua jornada.</p>
+            </div>
+            <div onClick={() => setStep('conteudosPersonalizados')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+              <h3 className="text-green-400 font-semibold text-lg">Conteúdos Personalizados</h3>
+              <p>Dicas exclusivas para você: {perfil}</p>
+            </div>
           </div>
         </section>
       )}
 
-      {step === 'trilhaDetalhe' && perfil && (
-        <section className="space-y-6 w-full max-w-2xl">
-          <h2 className="text-2xl font-bold text-center">Dicas para seu perfil ({perfil})</h2>
-          <ul className="list-disc pl-6">
-            {getDicasTrilha(perfil).map((dica, index) => (
+      {step === 'trilhas' && perfil && (
+        <section className="w-full max-w-2xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
+          <h2 className="text-2xl font-bold text-green-400 text-center">Dicas para seu perfil: {perfil}</h2>
+          <ul className="list-disc list-inside text-zinc-300 space-y-2">
+            {dicasPorPerfil[perfil].map((dica, index) => (
               <li key={index}>{dica}</li>
             ))}
           </ul>
-          <button onClick={() => setStep('home')} className={btnPrimaryClass}>Voltar</button>
+          <button onClick={() => setStep('home')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition">Voltar para o Início</button>
         </section>
       )}
 
-      {step === 'psicologo' && (
-        <section className="space-y-6 w-full max-w-md text-center">
-          <h2 className="text-2xl font-bold">Seja nosso Psicólogo Parceiro</h2>
-          <p>Envie sua proposta + currículo para: <br/><span className="text-green-400 font-semibold">equipejovify@gmail.com</span></p>
-          <button onClick={() => setStep('home')} className={btnPrimaryClass}>Voltar</button>
+      {step === 'sessaoPsicologo' && (
+        <section className="w-full max-w-md bg-zinc-900 p-8 rounded-xl shadow-xl text-center space-y-6">
+          <h2 className="text-2xl font-bold text-green-400">Trabalhe conosco!</h2>
+          <p className="text-zinc-300">Se você é psicólogo(a) e deseja colaborar com a Jovify, envie sua proposta e currículo para <strong>equipejovify@gmail.com</strong></p>
+          <button onClick={() => setStep('home')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition">Voltar para o Início</button>
         </section>
       )}
 
-      {step === 'mensagens' && (
-        <section className="space-y-6 w-full max-w-md">
-          <h2 className="text-2xl font-bold text-center">Receba Mensagens Diárias</h2>
-          <input type="text" placeholder="Seu celular ou email" value={contato} onChange={(e) => setContato(e.target.value)} className={inputClass} />
-          <textarea placeholder="O que gostaria de ver mais nas mensagens?" value={sugestaoMensagem} onChange={(e) => setSugestaoMensagem(e.target.value)} className={inputClass} />
-          <button onClick={() => setStep('home')} className={btnPrimaryClass}>Enviar</button>
+      {step === 'mensagensDiarias' && (
+        <section className="w-full max-w-md bg-zinc-900 p-8 rounded-xl shadow-xl space-y-4">
+          <h2 className="text-2xl font-bold text-green-400 text-center">Mensagens Diárias</h2>
+          <input
+            type="text"
+            placeholder="Digite seu celular ou email"
+            value={contato}
+            onChange={(e) => setContato(e.target.value)}
+            className="w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700"
+          />
+          <textarea
+            placeholder="O que você gostaria de ver mais nesta trilha?"
+            value={sugestao}
+            onChange={(e) => setSugestao(e.target.value)}
+            className="w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700"
+          ></textarea>
+          <button onClick={() => setStep('home')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition">Enviar e Voltar</button>
         </section>
       )}
 
       {step === 'comunidade' && perfil && (
-        <section className="space-y-6 w-full max-w-2xl">
-          <h2 className="text-2xl font-bold text-center">Comunidade Jovify - {perfil}</h2>
-          <p>Conecte-se com jovens do seu perfil! Participe do chat geral ou solicite amizade para chats privados.</p>
-          <button onClick={() => setStep('home')} className={btnPrimaryClass}>Voltar</button>
+        <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-4">
+          <h2 className="text-2xl font-bold text-green-400 text-center">Comunidade Jovify - {perfil}</h2>
+          <p className="text-zinc-300 text-center">Participe do chat geral ou solicite amizade para conversar em particular com outros usuários do seu perfil.</p>
+          <div className="bg-zinc-800 p-4 rounded-xl text-zinc-300">[Área de Chat Geral do Perfil: {perfil} - Em construção]</div>
+          <button onClick={() => setStep('home')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition">Voltar para o Início</button>
         </section>
       )}
 
-      {step === 'conteudos' && perfil && (
-        <section className="space-y-6 w-full max-w-2xl">
-          <h2 className="text-2xl font-bold text-center">Conteúdos para {perfil}</h2>
-          <ul className="list-disc pl-6">
-            {getConteudosPersonalizados(perfil).map((conteudo, index) => (
-              <li key={index}>{conteudo}</li>
-            ))}
+      {step === 'conteudosPersonalizados' && perfil && (
+        <section className="w-full max-w-2xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-4">
+          <h2 className="text-2xl font-bold text-green-400 text-center">Conteúdos Personalizados - {perfil}</h2>
+          <ul className="list-disc list-inside text-zinc-300 space-y-2">
+            <li>Dicas para lidar com autossabotagem</li>
+            <li>Como reciclar falsas crenças</li>
+            <li>Lidando com a necessidade de perfeição</li>
           </ul>
-          <button onClick={() => setStep('home')} className={btnPrimaryClass}>Voltar</button>
+          <button onClick={() => setStep('home')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition">Voltar para o Início</button>
         </section>
       )}
     </main>
