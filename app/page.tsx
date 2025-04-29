@@ -8,8 +8,8 @@ export default function Home() {
 
   const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' | 'sessaoPsicologo' | 'mensagensDiarias' | 'comunidade' | 'conteudosPersonalizados'>('inicio')
   const [nome, setNome] = useState('')
-  const [cpf, setCpf] = useState('')
-  const [email, setEmail] = useState('')
+  const [_cpf, _setCpf] = useState('')
+  const [_email, _setEmail] = useState('')
   const [dataNascimento, setDataNascimento] = useState('')
   const [senha, setSenha] = useState('')
   const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
