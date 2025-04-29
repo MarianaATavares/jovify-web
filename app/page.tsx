@@ -1,8 +1,10 @@
-'use client';
-
-import { useState } from 'react';
+'use client'
+import { useState } from 'react'
+// import { useRouter } from 'next/navigation' // Comentado pois não está sendo usado
 
 export default function Home() {
+  // const router = useRouter() // Comentado pois não está sendo usado
+
   const [step, setStep] = useState<
     'inicio' | 'perfil' | 'home' | 'trilhas' | 'psicologos' | 'mensagens' | 'comunidade' | 'conteudos'
   >('inicio');
