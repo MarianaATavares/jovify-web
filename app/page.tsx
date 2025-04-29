@@ -7,22 +7,19 @@ export default function Home() {
   const router = useRouter()
 
   const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' | 'sessaoPsicologo' | 'mensagensDiarias' | 'comunidade' | 'conteudosPersonalizados'>('inicio')
-const [nome, setNome] = useState<string>('')
-const [dataNascimento, setDataNascimento] = useState<string>('')
-const [senha, setSenha] = useState<string>('')
-const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
-const [perfil, setPerfil] = useState<string | null>(null)
-const [contato, setContato] = useState<string>('')
-const [sugestao, setSugestao] = useState<string>('')
-
-
+  const [nome, setNome] = useState<string>('')
+  const [dataNascimento, setDataNascimento] = useState<string>('')
+  const [senha, setSenha] = useState<string>('')
+  const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
+  const [perfil, setPerfil] = useState<string | null>(null)
+  const [contato, setContato] = useState<string>('')
+  const [sugestao, setSugestao] = useState<string>('')
 
   const handleChange = (index: number, value: number) => {
     const novasRespostas = [...respostas]
     novasRespostas[index] = value
     setRespostas(novasRespostas)
   }
-
   const calcularPerfil = () => {
     const soma = respostas.reduce((a, b) => a + b, 0)
     if (soma < 12) return 'Empático'
