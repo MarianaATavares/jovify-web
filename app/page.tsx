@@ -7,15 +7,17 @@ export default function Home() {
   const router = useRouter()
 
   const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' | 'sessaoPsicologo' | 'mensagensDiarias' | 'comunidade' | 'conteudosPersonalizados'>('inicio')
-  const [nome, setNome] = useState('')
-  const [_cpf, _setCpf] = useState('')
-  const [_email, _setEmail] = useState('')
-  const [dataNascimento, setDataNascimento] = useState('')
-  const [senha, setSenha] = useState('')
-  const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
-  const [perfil, setPerfil] = useState<string | null>(null)
-  const [contato, setContato] = useState('')
-  const [sugestao, setSugestao] = useState('')
+const [nome, setNome] = useState<string>('')
+const [_cpf, _setCpf] = useState<string>('')
+const [_email, _setEmail] = useState<string>('')
+const [dataNascimento, setDataNascimento] = useState<string>('')
+const [senha, setSenha] = useState<string>('')
+const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
+const [perfil, setPerfil] = useState<string | null>(null)
+const [contato, setContato] = useState<string>('')
+const [sugestao, setSugestao] = useState<string>('')
+
+
 
   const handleChange = (index: number, value: number) => {
     const novasRespostas = [...respostas]
