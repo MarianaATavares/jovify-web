@@ -20,6 +20,7 @@ export default function Home() {
     novasRespostas[index] = value
     setRespostas(novasRespostas)
   }
+
   const calcularPerfil = () => {
     const soma = respostas.reduce((a, b) => a + b, 0)
     if (soma < 12) return 'Empático'
@@ -159,45 +160,47 @@ export default function Home() {
         </section>
       )}
 
-{step === 'conteudosPersonalizados' && perfil && (
-  <section className="w-full max-w-2xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-4">
-    <h2 className="text-2xl font-bold text-green-400 text-center">Conteúdos Personalizados - {perfil}</h2>
+      {step === 'conteudosPersonalizados' && perfil && (
+        <section className="w-full max-w-2xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-4">
+          <h2 className="text-2xl font-bold text-green-400 text-center">Conteúdos Personalizados - {perfil}</h2>
 
-    <div className="space-y-3 text-zinc-300">
-      <h3 className="text-lg font-semibold text-green-400">💭 Como lidar com a autossabotagem</h3>
-      <p>
-        A autossabotagem acontece quando criamos barreiras internas que nos impedem de evoluir. 
-        Reconheça padrões como procrastinação, autocrítica excessiva ou medo de fracassar. 
-        Uma dica prática é escrever o que está sentindo e quais pensamentos surgem antes de evitar uma tarefa. 
-        Pergunte-se: "Essa crença é realmente verdadeira?" ou "Que prova tenho disso?". A escrita terapêutica ajuda a reorganizar o pensamento e construir uma autopercepção mais generosa.
-      </p>
-    </div>
+          <div className="space-y-3 text-zinc-300">
+            <h3 className="text-lg font-semibold text-green-400">💭 Como lidar com a autossabotagem</h3>
+            <p>
+              A autossabotagem acontece quando criamos barreiras internas que nos impedem de evoluir. 
+              Reconheça padrões como procrastinação, autocrítica excessiva ou medo de fracassar. 
+              Uma dica prática é escrever o que está sentindo e quais pensamentos surgem antes de evitar uma tarefa. 
+              Pergunte-se: "Essa crença é realmente verdadeira?" ou "Que prova tenho disso?". A escrita terapêutica ajuda a reorganizar o pensamento e construir uma autopercepção mais generosa.
+            </p>
+          </div>
 
-    <div className="space-y-3 text-zinc-300">
-      <h3 className="text-lg font-semibold text-green-400">🔄 Como reciclar falsas crenças</h3>
-      <p>
-        Falsas crenças são ideias distorcidas que criamos sobre nós mesmos, geralmente na infância ou adolescência, como "não sou bom o suficiente" ou "não consigo mudar". 
-        Identifique essas frases e confronte-as com fatos reais da sua vida. Crie versões alternativas e mais positivas dessas frases. 
-        Exemplo: troque "não sou criativo" por "posso desenvolver minha criatividade com prática e paciência".
-      </p>
-    </div>
+          <div className="space-y-3 text-zinc-300">
+            <h3 className="text-lg font-semibold text-green-400">🔄 Como reciclar falsas crenças</h3>
+            <p>
+              Falsas crenças são ideias distorcidas que criamos sobre nós mesmos, geralmente na infância ou adolescência, como "não sou bom o suficiente" ou "não consigo mudar". 
+              Identifique essas frases e confronte-as com fatos reais da sua vida. Crie versões alternativas e mais positivas dessas frases. 
+              Exemplo: troque "não sou criativo" por "posso desenvolver minha criatividade com prática e paciência".
+            </p>
+          </div>
 
-    <div className="space-y-3 text-zinc-300">
-      <h3 className="text-lg font-semibold text-green-400">🎯 Lidando com a necessidade de perfeição</h3>
-      <p>
-        A busca pelo perfeccionismo gera estresse e paralisia. Aceite que errar faz parte do aprendizado. 
-        Ao invés de se cobrar perfeição, foque em progresso e consistência. 
-        Tente praticar o “feito é melhor que perfeito” e celebre pequenas vitórias ao longo do caminho. 
-        Exercícios de mindfulness também ajudam a reduzir a autocobrança e aumentar a autocompaixão.
-      </p>
-    </div>
+          <div className="space-y-3 text-zinc-300">
+            <h3 className="text-lg font-semibold text-green-400">🎯 Lidando com a necessidade de perfeição</h3>
+            <p>
+              A busca pelo perfeccionismo gera estresse e paralisia. Aceite que errar faz parte do aprendizado. 
+              Ao invés de se cobrar perfeição, foque em progresso e consistência. 
+              Tente praticar o “feito é melhor que perfeito” e celebre pequenas vitórias ao longo do caminho. 
+              Exercícios de mindfulness também ajudam a reduzir a autocobrança e aumentar a autocompaixão.
+            </p>
+          </div>
 
-    <button
-      onClick={() => setStep('home')}
-      className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition"
-    >
-      Voltar para o Início
-    </button>
-  </section>
-)}
-
+          <button
+            onClick={() => setStep('home')}
+            className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition"
+          >
+            Voltar para o Início
+          </button>
+        </section>
+      )}
+    </main>
+  )
+} // ← ESSA LINHA FOI ADICIONADA PARA CORRIGIR O ERRO
