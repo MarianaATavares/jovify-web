@@ -1,5 +1,7 @@
 'use client'
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
@@ -86,7 +88,6 @@ export default function Home() {
               <h3 className="text-green-400 font-semibold text-lg">Sessões com Psicólogos</h3>
               <p>Agende conversas com nossos especialistas parceiros para cuidar da sua mente.</p>
             </div>
-            {/* ... outras opções ... */}
           </div>
         </section>
       )}
