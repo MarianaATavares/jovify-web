@@ -1,16 +1,12 @@
 'use client'
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function Home() {
   const router = useRouter()
 
-  const [step, setStep] = useState<
-    'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' | 'trilhaDetalhes' | 'psicologo'
-  >('inicio')
+  const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' | 'trilhaDetalhes' | 'convidarPsicologo'>('inicio')
   const [nome, setNome] = useState('')
   const [cpf, setCpf] = useState('')
   const [email, setEmail] = useState('')
@@ -74,8 +70,9 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white">
-      {/* ... todas as seções anteriores permanecem inalteradas ... */}
+      {/* Todas as etapas anteriores mantidas exatamente como estavam... */}
 
+      {/* Home com botão atualizado */}
       {step === 'home' && (
         <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
           <h2 className="text-3xl font-bold text-green-400 text-center">Home - Bem-vindo, {nome}!</h2>
@@ -84,27 +81,45 @@ export default function Home() {
               <h3 className="text-green-400 font-semibold text-lg">Trilhas de Autodesenvolvimento</h3>
               <p>Acesse conteúdos e desafios personalizados para evoluir continuamente.</p>
             </div>
-            <div onClick={() => setStep('psicologo')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+            <div onClick={() => setStep('convidarPsicologo')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
               <h3 className="text-green-400 font-semibold text-lg">Sessões com Psicólogos</h3>
               <p>Agende conversas com nossos especialistas parceiros para cuidar da sua mente.</p>
+            </div>
+            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+              <h3 className="text-green-400 font-semibold text-lg">Mensagens Diárias</h3>
+              <p>Receba motivações diárias e mantenha o foco no que importa.</p>
+            </div>
+            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+              <h3 className="text-green-400 font-semibold text-lg">Comunidade Jovify</h3>
+              <p>Conecte-se com outros jovens inconformados e compartilhe sua jornada.</p>
+            </div>
+            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+              <h3 className="text-green-400 font-semibold text-lg">Conteúdos Personalizados</h3>
+              <p>Receba artigos, vídeos e dicas com base no seu perfil: {perfil}.</p>
             </div>
           </div>
         </section>
       )}
 
-      {step === 'psicologo' && (
-        <section className="w-full max-w-2xl bg-zinc-900 p-8 rounded-xl shadow-xl text-center space-y-6">
-          <h2 className="text-3xl font-bold text-green-400">Sessões com Psicólogos</h2>
-          <p className="text-zinc-300">
-            Se você é psicólogo ou psicóloga e deseja fazer parte da nossa rede de profissionais parceiros,
-            envie seu currículo para o e-mail:
+      {/* NOVA TELA: Convidar Psicólogo */}
+      {step === 'convidarPsicologo' && (
+        <section className="w-full max-w-2xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6 text-center">
+          <h2 className="text-3xl font-bold text-green-400">Profissional da Psicologia, venha com a gente!</h2>
+          <p className="text-zinc-300 text-lg">
+            A Jovify acredita no poder da escuta, da orientação e do acolhimento. Se você é psicólogo(a) e compartilha desse propósito, queremos você com a gente!
           </p>
-          <p className="text-green-400 text-xl font-semibold">equipejovify@gmail.com</p>
+          <p className="text-zinc-300 text-lg">
+            Envie seu currículo e uma breve apresentação para:<br />
+            <span className="text-green-400 font-semibold">equipejovify@gmail.com</span>
+          </p>
+          <p className="text-zinc-400 italic">
+            Vamos construir juntos um espaço de transformação para os jovens do Brasil.
+          </p>
           <button
             onClick={() => setStep('home')}
-            className="mt-4 bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-4 rounded transition"
+            className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition"
           >
-            Voltar para a Home
+            Voltar para o Início
           </button>
         </section>
       )}
