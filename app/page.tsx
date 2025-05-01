@@ -1,10 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 
 export default function Home() {
-  const router = useRouter()
   const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' | 'trilhaDetalhes' | 'psicologo'>('inicio')
   const [nome, setNome] = useState('')
   const [cpf, setCpf] = useState('')
@@ -60,13 +58,6 @@ export default function Home() {
     setStep('resultado')
   }
 
-  const Dica = ({ titulo, conteudo }: { titulo: string, conteudo: string }) => (
-    <div className="bg-zinc-800 p-4 rounded-lg shadow-md">
-      <h4 className="text-green-400 font-semibold text-lg">{titulo}</h4>
-      <p className="text-zinc-300">{conteudo}</p>
-    </div>
-  )
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white">
       {step === 'inicio' && (
@@ -85,7 +76,7 @@ export default function Home() {
           <input type="text" placeholder="Digite seu nome" value={nome} onChange={(e) => setNome(e.target.value)} className="w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700" />
           <input type="text" placeholder="Digite seu CPF" value={cpf} onChange={(e) => setCpf(e.target.value)} className="w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700" />
           <input type="email" placeholder="Digite seu email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700" />
-          <input type="date" placeholder="Digite sua data de nascimento" value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} className="w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700" />
+          <input type="date" value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} className="w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700" />
           <input type="password" placeholder="Crie uma senha" value={senha} onChange={(e) => setSenha(e.target.value)} className="w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700" />
           <button onClick={() => nome.trim() !== '' && setStep('autoconhecimento')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition">
             Avançar
