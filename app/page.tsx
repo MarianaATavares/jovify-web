@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { motion } from 'framer-motion'
 
 export default function Home() {
   const router = useRouter()
@@ -121,12 +120,7 @@ export default function Home() {
       )}
 
       {step === 'boasVindas' && perfil && (
-        <motion.section
-          className="bg-zinc-900 p-8 rounded-xl shadow-xl w-full max-w-md text-center space-y-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
+        <section className="bg-zinc-900 p-8 rounded-xl shadow-xl w-full max-w-md text-center space-y-6">
           <h2 className="text-3xl font-bold text-green-400">Seja bem-vindo(a), {nome}!</h2>
           <p className="text-zinc-300">{getDescricaoPerfil(perfil)}</p>
           <div className="space-y-4 text-left text-zinc-300">
@@ -142,7 +136,7 @@ export default function Home() {
           <button onClick={() => setStep('home')} className="bg-green-500 hover:bg-green-600 text-black font-bold py-2 w-full rounded transition">
             Ir para a Página Inicial
           </button>
-        </motion.section>
+        </section>
       )}
 
       {step === 'home' && (
