@@ -146,37 +146,45 @@ export default function Home() {
         </section>
       )}
 
-      {step === 'home' && (
-        <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
-          <h2 className="text-3xl font-bold text-green-400 text-center">Home - Bem-vindo, {nome}!</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-zinc-300">
-            <div onClick={() => setStep('trilhas')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
-              <h3 className="text-green-400 font-semibold text-lg">Trilhas de Autodesenvolvimento</h3>
-              <p>Acesse conteúdos e desafios personalizados para evoluir continuamente.</p>
-            </div>
-            <div onClick={() => router.push('/psicologo')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
-              <h3 className="text-green-400 font-semibold text-lg">Sessões com Psicólogos</h3>
-              <p>Agende conversas com nossos especialistas parceiros para cuidar da sua mente.</p>
-            </div>
-            <div onClick={() => setStep('profissionais')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
-              <h3 className="text-green-400 font-semibold text-lg">Profissionais da Saúde</h3>
-              <p>Faça parte da nossa rede de especialistas e contribua com a saúde emocional de jovens.</p>
-            </div>
-            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
-              <h3 className="text-green-400 font-semibold text-lg">Mensagens Diárias</h3>
-              <p>Receba motivações diárias e mantenha o foco no que importa.</p>
-            </div>
-            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
-              <h3 className="text-green-400 font-semibold text-lg">Comunidade Jovify</h3>
-              <p>Conecte-se com outros jovens inconformados e compartilhe sua jornada.</p>
-            </div>
-            <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
-              <h3 className="text-green-400 font-semibold text-lg">Conteúdos Personalizados</h3>
-              <p>Receba artigos, vídeos e dicas com base no seu perfil: {perfil}.</p>
-            </div>
-          </div>
-        </section>
-      )}
+{step === 'home' && (
+  <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
+    <h2 className="text-3xl font-bold text-green-400 text-center">Home - Bem-vindo, {nome}!</h2>
+    
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-zinc-300">
+      <div onClick={() => setStep('trilhas')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+        <h3 className="text-green-400 font-semibold text-lg">Trilhas de Autodesenvolvimento</h3>
+        <p>Acesse conteúdos e desafios personalizados para evoluir continuamente.</p>
+      </div>
+      <div onClick={() => router.push('/psicologo')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+        <h3 className="text-green-400 font-semibold text-lg">Sessões com Psicólogos</h3>
+        <p>Agende conversas com nossos especialistas parceiros para cuidar da sua mente.</p>
+      </div>
+      <div onClick={() => setStep('profissionais')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+        <h3 className="text-green-400 font-semibold text-lg">Profissionais da Saúde</h3>
+        <p>Faça parte da nossa rede de especialistas e contribua com a saúde emocional de jovens.</p>
+      </div>
+      <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+        <h3 className="text-green-400 font-semibold text-lg">Mensagens Diárias</h3>
+        <p>Receba motivações diárias e mantenha o foco no que importa.</p>
+      </div>
+      <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+        <h3 className="text-green-400 font-semibold text-lg">Comunidade Jovify</h3>
+        <p>Conecte-se com outros jovens inconformados e compartilhe sua jornada.</p>
+      </div>
+      <div className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+        <h3 className="text-green-400 font-semibold text-lg">Conteúdos Personalizados</h3>
+        <p>Receba artigos, vídeos e dicas com base no seu perfil: {perfil}.</p>
+      </div>
+    </div>
+
+    {/* Aqui está a dica do dia */}
+    <Dica 
+      titulo="Dica do Dia" 
+      conteudo="Lembre-se de cuidar da sua saúde mental diariamente!" 
+    />
+  </section>
+)}
+
 
       {step === 'profissionais' && (
         <section className="w-full max-w-2xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6 text-center">
