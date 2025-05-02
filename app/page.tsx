@@ -1,22 +1,12 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
+  const router = useRouter()
+
   const [step, setStep] = useState<'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' | 'trilhaDetalhes' | 'psicologo'>('inicio')
-  const [previousStep, setPreviousStep] = useState<typeof step | null>(null)
-
-  const goToStep = (nextStep: typeof step) => {
-    setPreviousStep(step)
-    setStep(nextStep)
-  }
-
-  const goBack = () => {
-    if (previousStep) {
-      setStep(previousStep)
-    }
-  }
-
   const [nome, setNome] = useState('')
   const [cpf, setCpf] = useState('')
   const [email, setEmail] = useState('')
@@ -68,7 +58,7 @@ export default function Home() {
   const enviarRespostas = () => {
     const perfilCalculado = calcularPerfil()
     setPerfil(perfilCalculado)
-    goToStep('resultado')
+    setStep('resultado')
   }
 
   const Dica = ({ titulo, conteudo }: { titulo: string, conteudo: string }) => (
@@ -79,18 +69,24 @@ export default function Home() {
   )
 
   const BotaoVoltar = () => (
-    <button onClick={goBack} className="bg-green-700 hover:bg-green-800 text-white py-2 px-4 rounded mt-4">
-      ← Voltar
+    <button
+      onClick={() => router.back()}
+      className="absolute top-4 left-4 bg-green-600 hover:bg-green-700 text-black font-bold py-1 px-3 rounded"
+    >
+      Voltar
     </button>
   )
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white relative">
+
+      {step !== 'inicio' && <BotaoVoltar />}
+
       {step === 'inicio' && (
         <section className="text-center space-y-6">
           <h1 className="text-4xl font-bold text-green-400">Bem-vindo à Jovify</h1>
           <p className="text-zinc-300 text-xl font-medium">A nova geração que transformará o mundo começa aqui.</p>
-          <button onClick={() => goToStep('cadastro')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
+          <button onClick={() => setStep('cadastro')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
             Entrar com convite / Pedir acesso
           </button>
           <div className="mt-6 flex justify-center gap-4 text-sm text-zinc-400">
@@ -110,10 +106,9 @@ export default function Home() {
           <input type="email" placeholder="Digite seu email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700" />
           <input type="date" value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} className="w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700" />
           <input type="password" placeholder="Crie uma senha" value={senha} onChange={(e) => setSenha(e.target.value)} className="w-full p-2 rounded bg-zinc-800 text-white border border-zinc-700" />
-          <button onClick={() => nome.trim() !== '' && goToStep('autoconhecimento')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition">
+          <button onClick={() => nome.trim() !== '' && setStep('autoconhecimento')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition">
             Avançar
           </button>
-          <BotaoVoltar />
         </section>
       )}
 
@@ -129,7 +124,6 @@ export default function Home() {
           <button onClick={enviarRespostas} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition">
             Ver meu perfil
           </button>
-          <BotaoVoltar />
         </section>
       )}
 
@@ -138,10 +132,9 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-green-400">Olá, {nome}!</h2>
           <p className="text-xl text-white">Seu perfil é: <span className="text-green-400 font-semibold">{perfil}</span></p>
           <p className="text-zinc-300">{getDescricaoPerfil(perfil)}</p>
-          <button onClick={() => goToStep('boasVindas')} className="mt-4 bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition">
+          <button onClick={() => setStep('boasVindas')} className="mt-4 bg-green-600 hover:bg-green-700 text-black font-bold py-2 w-full rounded transition">
             Acessar Funções Especiais
           </button>
-          <BotaoVoltar />
         </section>
       )}
 
@@ -159,10 +152,9 @@ export default function Home() {
               <li>Receber conteúdos personalizados pelo seu perfil</li>
             </ul>
           </div>
-          <button onClick={() => goToStep('home')} className="bg-green-500 hover:bg-green-600 text-black font-bold py-2 w-full rounded transition">
+          <button onClick={() => setStep('home')} className="bg-green-500 hover:bg-green-600 text-black font-bold py-2 w-full rounded transition">
             Ir para a Página Inicial
           </button>
-          <BotaoVoltar />
         </section>
       )}
 
@@ -170,16 +162,15 @@ export default function Home() {
         <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
           <h2 className="text-3xl font-bold text-green-400 text-center">Home - Bem-vindo, {nome}!</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-zinc-300">
-            <div onClick={() => goToStep('trilhas')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+            <div onClick={() => setStep('trilhas')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
               <h3 className="text-green-400 font-semibold text-lg">Trilhas de Autodesenvolvimento</h3>
               <p>Acesse conteúdos e desafios personalizados para evoluir continuamente.</p>
             </div>
-            <div onClick={() => goToStep('psicologo')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+            <div onClick={() => setStep('psicologo')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
               <h3 className="text-green-400 font-semibold text-lg">Sessões com Psicólogos</h3>
               <p>Agende conversas com nossos especialistas parceiros para cuidar da sua mente.</p>
             </div>
           </div>
-          <BotaoVoltar />
         </section>
       )}
 
@@ -187,10 +178,9 @@ export default function Home() {
         <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6 text-center">
           <h2 className="text-3xl font-bold text-green-400">Trilhas de Autodesenvolvimento</h2>
           <p className="text-zinc-300">Explore conteúdos e dicas personalizados para seu perfil.</p>
-          <button onClick={() => goToStep('trilhaDetalhes')} className="bg-green-500 hover:bg-green-600 text-black font-bold py-2 w-full rounded transition">
+          <button onClick={() => setStep('trilhaDetalhes')} className="bg-green-500 hover:bg-green-600 text-black font-bold py-2 w-full rounded transition">
             Ver Dicas Personalizadas
           </button>
-          <BotaoVoltar />
         </section>
       )}
 
@@ -198,27 +188,18 @@ export default function Home() {
         <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
           <h2 className="text-3xl font-bold text-green-400 text-center">Dicas para o perfil: {perfil}</h2>
           <p className="text-zinc-300 text-center">Inspire-se com recomendações feitas sob medida para seu estilo único.</p>
-          {['Empático', 'Guardião', 'Estratégico', 'Pioneiro'].includes(perfil) && (
-            <>
-              {/* Condicional render para cada perfil já está incluso no seu código original */}
-            </>
-          )}
-          <BotaoVoltar />
+
+          {/* ... Dicas conforme perfil ... */}
         </section>
       )}
 
       {step === 'psicologo' && (
         <section className="w-full max-w-2xl bg-zinc-900 p-8 rounded-xl shadow-xl text-center space-y-6">
           <h2 className="text-3xl font-bold text-green-400">Sessões com Psicólogos</h2>
-          <p className="text-zinc-300">Estamos montando uma rede de psicólogos parceiros da Jovify.</p>
-          <p className="text-zinc-300">Se você é psicólogo(a) e tem interesse em fazer parte, envie um e-mail para:</p>
-          <a href="mailto:equipejovify@gmail.com" className="text-green-400 underline">equipejovify@gmail.com</a>
-          <button onClick={() => setStep('home')} className="mt-6 bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
-            Voltar à Home
-          </button>
-          <BotaoVoltar />
+          <p className="text-zinc-300">Em breve você poderá agendar sessões com profissionais da área de saúde mental.</p>
         </section>
       )}
+
     </main>
   )
 }
