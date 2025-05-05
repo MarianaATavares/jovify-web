@@ -81,7 +81,7 @@ export default function Home() {
       {step === 'inicio' && (
         <section className="text-center space-y-6">
           <h1 className="text-4xl font-bold text-green-400">Bem-vindo à Gerafy</h1>
-          <p className="text-zinc-300 text-xl font-medium">A nova geração que transformará o mundo começa aqui.</p>
+          <p className="text-zinc-300 text-xl font-medium">Onde cada geração encontra seu propósito.</p>
           <button onClick={() => setStep('cadastro')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
             Entrar com convite / Pedir acesso
           </button>
