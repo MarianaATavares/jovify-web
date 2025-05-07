@@ -86,7 +86,7 @@ export default function Home() {
             Entrar com convite / Pedir acesso
           </button>
           <div className="mt-6 flex justify-center gap-4 text-sm text-zinc-400">
-            <a href="https://instagram.com/thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">Instagram</a>
+            <a href="https://www.instagram.com/themindyz/" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">Instagram</a>
             <a href="https://youtube.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">YouTube</a>
             <a href="mailto:sacjovify@gmail.com" className="hover:text-green-400">Email</a>
             <a href="https://tiktok.com/@thejovify" target="_blank" rel="noopener noreferrer" className="hover:text-green-400">TikTok</a>
