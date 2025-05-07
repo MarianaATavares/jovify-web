@@ -234,7 +234,7 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-green-400">Sessões com Psicólogos</h2>
           <p className="text-zinc-300">Estamos montando uma rede de psicólogos parceiros da Jovify.</p>
           <p className="text-zinc-300">Se você é psicólogo(a) e tem interesse em fazer parte, envie um e-mail para:</p>
-          <a href="mailto:equipejovify@gmail.com" className="text-green-400 underline">equipejovify@gmail.com</a>
+          <a href="mailto:equipemindyz@gmail.com" className="text-green-400 underline">equipejovify@gmail.com</a>
         </section>
       )}
     </main>
