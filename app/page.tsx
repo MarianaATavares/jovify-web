@@ -232,9 +232,9 @@ export default function Home() {
         <section className="w-full max-w-2xl bg-zinc-900 p-8 rounded-xl shadow-xl text-center space-y-6">
           <BotaoVoltar voltarPara="home" />
           <h2 className="text-3xl font-bold text-green-400">Sessões com Psicólogos</h2>
-          <p className="text-zinc-300">Estamos montando uma rede de psicólogos parceiros da Jovify.</p>
+          <p className="text-zinc-300">Estamos montando uma rede de psicólogos parceiros da Mindyz.</p>
           <p className="text-zinc-300">Se você é psicólogo(a) e tem interesse em fazer parte, envie um e-mail para:</p>
-          <a href="mailto:equipemindyz@gmail.com" className="text-green-400 underline">equipejovify@gmail.com</a>
+          <a href="mailto:equipemindyz@gmail.com" className="text-green-400 underline">equipemindyz@gmail.com</a>
         </section>
       )}
     </main>
