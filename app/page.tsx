@@ -59,6 +59,8 @@ export default function Home() {
     setPerfil(perfilCalculado)
     setStep('resultado')
   }
+console.log({ nome, cpf, email, dataNascimento, senha, perfil, setNome, setCpf, setEmail, setDataNascimento, setSenha, setPerfil, handleChange, getDescricaoPerfil, perguntas, enviarRespostas });
+
 
   const BotaoVoltar = ({ voltarPara }: { voltarPara: typeof step }) => (
     <button
