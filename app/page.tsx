@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 export default function Home() {
   const [step, setStep] = useState<
-    'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' | 'trilhaDetalhes' | 'psicologo' | 'mensagens'
+    'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' | 'trilhaDetalhes' | 'psicologo' | 'motivacional'
   >('inicio')
   const [nome, setNome] = useState('')
   const [cpf, setCpf] = useState('')
@@ -13,6 +13,7 @@ export default function Home() {
   const [senha, setSenha] = useState('')
   const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
   const [perfil, setPerfil] = useState<string | null>(null)
+  const [sentimento, setSentimento] = useState<'ansiedade' | 'estresse' | 'medo' | null>(null)
 
   const handleChange = (index: number, value: number) => {
     const novasRespostas = [...respostas]
@@ -31,13 +32,13 @@ export default function Home() {
   const getDescricaoPerfil = (perfil: string) => {
     switch (perfil) {
       case 'Empático':
-        return 'Você tem uma grande sensibilidade emocional...'
+        return 'Você tem uma grande sensibilidade emocional, valoriza conexões humanas e está sempre pronto para apoiar quem precisa. Seu poder está na escuta e no acolhimento.'
       case 'Guardião':
-        return 'Você é leal, confiável e organizado...'
+        return 'Você é leal, confiável e organizado. Gosta de proteger o que é importante e se dedica com responsabilidade às suas tarefas. Um verdadeiro pilar para qualquer equipe.'
       case 'Estratégico':
-        return 'Você pensa à frente, enxerga soluções...'
+        return 'Você pensa à frente, enxerga soluções e sabe como alcançar objetivos com inteligência. Seu raciocínio lógico e visão tática te destacam.'
       case 'Pioneiro':
-        return 'Você é um líder nato! Ama inovação...'
+        return 'Você é um líder nato! Ama inovação, desafiar padrões e transformar ideias em realidade. Seu espírito criativo e ousado inspira mudanças.'
       default:
         return ''
     }
@@ -60,9 +61,6 @@ export default function Home() {
     setStep('resultado')
   }
 
-  console.log("Step atual:", step)
-  console.log({ nome, cpf, email, dataNascimento, senha, perfil })
-
   const BotaoVoltar = ({ voltarPara }: { voltarPara: typeof step }) => (
     <button
       onClick={() => setStep(voltarPara)}
@@ -79,27 +77,24 @@ export default function Home() {
     </div>
   )
 
-  const mensagens = {
-    ansiedade: [
-      "Respire fundo. Você não está sozinho, tudo passa.",
-      "Concentre-se no presente, um passo de cada vez.",
-      "Aceite suas emoções sem se julgar."
-    ],
-    estresse: [
-      "Você merece uma pausa. Seu bem-estar importa.",
-      "Nem tudo precisa ser resolvido hoje. Respire.",
-      "Você já superou muito. Vai passar também."
-    ],
-    medo: [
-      "Coragem não é ausência de medo, é seguir apesar dele.",
-      "Você é mais forte do que pensa.",
-      "O medo é um sinal de que algo importa para você."
-    ]
+  const mensagensMotivacionais = {
+    ansiedade: 'Respire fundo. Lembre-se, tudo o que você sente é válido, mas pode ser controlado com calma e autocompaixão.',
+    estresse: 'Tire um momento para você. Relaxe, feche os olhos e respire profundamente. Você tem a força para superar qualquer desafio.',
+    medo: 'O medo é natural, mas não deixe que ele te paralise. Enfrente os seus medos com coragem e confiança em si mesmo.'
   }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white">
-      {/* HOME */}
+      {step === 'inicio' && (
+        <section className="text-center space-y-6">
+          <h1 className="text-4xl font-bold text-green-400">Bem-vindo à Mindzy</h1>
+          <p className="text-zinc-300 text-xl font-medium">Onde cada geração encontra seu propósito.</p>
+          <button onClick={() => setStep('cadastro')} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 px-6 rounded transition">
+            Entrar com convite / Pedir acesso
+          </button>
+        </section>
+      )}
+
       {step === 'home' && (
         <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
           <BotaoVoltar voltarPara="boasVindas" />
@@ -113,33 +108,37 @@ export default function Home() {
               <h3 className="text-green-400 font-semibold text-lg">Sessões com Psicólogos</h3>
               <p>Agende conversas com nossos especialistas parceiros para cuidar da sua mente.</p>
             </div>
-            <div onClick={() => setStep('mensagens')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
+            <div onClick={() => setStep('motivacional')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
               <h3 className="text-green-400 font-semibold text-lg">Mensagens Motivacionais</h3>
-              <p>Encontre apoio emocional para ansiedade, estresse e medo.</p>
+              <p>Receba mensagens de motivação diárias para ajudar a manter o foco e o equilíbrio emocional.</p>
             </div>
           </div>
         </section>
       )}
 
-      {/* MENSAGENS */}
-      {step === 'mensagens' && (
-        <section className="w-full max-w-2xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6 text-center">
+      {step === 'motivacional' && (
+        <section className="w-full max-w-md bg-zinc-900 p-6 rounded-xl shadow-xl text-center space-y-6">
           <BotaoVoltar voltarPara="home" />
           <h2 className="text-3xl font-bold text-green-400">Mensagens Motivacionais</h2>
-          <div className="space-y-4 text-left">
-            <Dica titulo="Ansiedade" conteudo={mensagens.ansiedade.join(' ')} />
-            <Dica titulo="Estresse" conteudo={mensagens.estresse.join(' ')} />
-            <Dica titulo="Medo" conteudo={mensagens.medo.join(' ')} />
+          <p className="text-zinc-300">Escolha como está se sentindo para receber uma mensagem inspiradora:</p>
+          <div className="space-x-4">
+            <button onClick={() => setSentimento('ansiedade')} className="bg-green-500 hover:bg-green-600 text-black py-2 px-6 rounded transition">
+              Ansiedade
+            </button>
+            <button onClick={() => setSentimento('estresse')} className="bg-green-500 hover:bg-green-600 text-black py-2 px-6 rounded transition">
+              Estresse
+            </button>
+            <button onClick={() => setSentimento('medo')} className="bg-green-500 hover:bg-green-600 text-black py-2 px-6 rounded transition">
+              Medo
+            </button>
           </div>
+          {sentimento && (
+            <p className="text-zinc-300 mt-4">{mensagensMotivacionais[sentimento]}</p>
+          )}
         </section>
       )}
 
-      {/* FALLBACK: Se nenhum step for tratado */}
-      {!['home', 'mensagens'].includes(step) && (
-        <p className="text-zinc-400 text-center mt-4">
-          Nenhum conteúdo disponível para o estado: <strong>{step}</strong>
-        </p>
-      )}
+      {/* Outras etapas do seu código (cadastro, autoconhecimento, etc.) vão aqui... */}
     </main>
   )
 }
