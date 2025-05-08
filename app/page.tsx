@@ -3,17 +3,27 @@
 import { useState } from 'react'
 
 export default function Home() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [step, setStep] = useState<
     'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' | 'trilhaDetalhes' | 'psicologo' | 'mensagens'
   >('inicio')
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [nome, setNome] = useState('')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [cpf, setCpf] = useState('')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [email, setEmail] = useState('')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [dataNascimento, setDataNascimento] = useState('')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [senha, setSenha] = useState('')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [perfil, setPerfil] = useState<string | null>(null)
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleChange = (index: number, value: number) => {
     const novasRespostas = [...respostas]
     novasRespostas[index] = value
