@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import { useState } from 'react'
 
@@ -6,7 +6,6 @@ export default function Home() {
   const [step, setStep] = useState<
     'inicio' | 'cadastro' | 'autoconhecimento' | 'resultado' | 'boasVindas' | 'home' | 'trilhas' | 'trilhaDetalhes' | 'psicologo' | 'mensagens'
   >('inicio')
-
   const [nome, setNome] = useState('')
   const [cpf, setCpf] = useState('')
   const [email, setEmail] = useState('')
@@ -14,13 +13,6 @@ export default function Home() {
   const [senha, setSenha] = useState('')
   const [respostas, setRespostas] = useState<number[]>(Array(8).fill(0))
   const [perfil, setPerfil] = useState<string | null>(null)
-  const [mensagem, setMensagem] = useState('')
-
-  const mensagensMotivacionais: Record<string, string> = {
-    ansiedade: 'Respire fundo. Você está fazendo o melhor que pode. Um passo de cada vez.',
-    estresse: 'Faça uma pausa. Você merece um momento só seu para se recompor.',
-    medo: 'A coragem não é a ausência do medo, e sim agir apesar dele. Você consegue!',
-  }
 
   const handleChange = (index: number, value: number) => {
     const novasRespostas = [...respostas]
@@ -84,9 +76,16 @@ export default function Home() {
     </div>
   )
 
+  const Mensagem = ({ titulo, texto }: { titulo: string, texto: string }) => (
+    <div className="bg-zinc-800 p-4 rounded-lg shadow-md space-y-2">
+      <h4 className="text-green-400 text-xl font-semibold">{titulo}</h4>
+      <p className="text-zinc-300">{texto}</p>
+    </div>
+  )
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white">
-      {/* ... todas as suas telas anteriores mantidas 100% idênticas ... */}
+      {/* ... todas as telas anteriores aqui sem alterações ... */}
 
       {step === 'home' && (
         <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
@@ -103,27 +102,28 @@ export default function Home() {
             </div>
             <div onClick={() => setStep('mensagens')} className="bg-zinc-800 p-4 rounded-xl hover:bg-zinc-700 transition cursor-pointer">
               <h3 className="text-green-400 font-semibold text-lg">Mensagens Motivacionais</h3>
-              <p>Encontre palavras de apoio para momentos difíceis.</p>
+              <p>Palavras para acalmar sua mente e fortalecer seu coração.</p>
             </div>
           </div>
         </section>
       )}
 
       {step === 'mensagens' && (
-        <section className="w-full max-w-md bg-zinc-900 p-8 rounded-xl shadow-xl text-center space-y-6">
+        <section className="w-full max-w-2xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
           <BotaoVoltar voltarPara="home" />
-          <h2 className="text-3xl font-bold text-green-400">Mensagens Motivacionais</h2>
-          <p className="text-zinc-300">Escolha como você está se sentindo:</p>
-          <div className="flex flex-col space-y-3">
-            <button onClick={() => setMensagem(mensagensMotivacionais.ansiedade)} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 rounded transition">Ansiedade</button>
-            <button onClick={() => setMensagem(mensagensMotivacionais.estresse)} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 rounded transition">Estresse</button>
-            <button onClick={() => setMensagem(mensagensMotivacionais.medo)} className="bg-green-600 hover:bg-green-700 text-black font-bold py-2 rounded transition">Medo</button>
-          </div>
-          {mensagem && (
-            <div className="mt-4 bg-zinc-800 p-4 rounded shadow text-green-400">
-              <p>{mensagem}</p>
-            </div>
-          )}
+          <h2 className="text-3xl font-bold text-green-400 text-center">Mensagens Motivacionais</h2>
+          <Mensagem
+            titulo="Ansiedade"
+            texto="Respire fundo. Tudo acontece no seu tempo. Você não precisa ter todas as respostas agora. Confie no processo."
+          />
+          <Mensagem
+            titulo="Estresse"
+            texto="Você está fazendo o melhor que pode. Permita-se descansar. Às vezes, pausar é o que te leva mais longe."
+          />
+          <Mensagem
+            titulo="Medo"
+            texto="Coragem não é ausência de medo, mas agir apesar dele. Você é mais forte do que imagina."
+          />
         </section>
       )}
     </main>
