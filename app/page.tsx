@@ -82,7 +82,7 @@ export default function Home() {
         <section className="text-center space-y-6">
           <h1 className="text-4xl font-bold text-green-400">Bem-vindo à Mindzy</h1>
           <p className="text-zinc-300 text-xl font-medium">Onde cada geração encontra seu propósito.</p>
-          <button onClick={() => setStep('cadastro')} className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded transition">
+          <button onClick={() => setStep('cadastro')} className="bg-purple-800 hover:bg-purple-900 text-white font-bold py-2 px-6 rounded transition">
   Entrar com convite / Pedir acesso
 </button>
           <div className="mt-6 flex justify-center gap-4 text-sm text-zinc-400">
