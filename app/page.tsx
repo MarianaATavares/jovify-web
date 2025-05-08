@@ -59,8 +59,9 @@ export default function Home() {
     setPerfil(perfilCalculado)
     setStep('resultado')
   }
-console.log({ nome, cpf, email, dataNascimento, senha, perfil, setNome, setCpf, setEmail, setDataNascimento, setSenha, setPerfil, handleChange, getDescricaoPerfil, perguntas, enviarRespostas });
 
+  console.log("Step atual:", step)
+  console.log({ nome, cpf, email, dataNascimento, senha, perfil })
 
   const BotaoVoltar = ({ voltarPara }: { voltarPara: typeof step }) => (
     <button
@@ -98,8 +99,7 @@ console.log({ nome, cpf, email, dataNascimento, senha, perfil, setNome, setCpf, 
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black p-6 text-white">
-      {/* ... todas as etapas anteriores ... */}
-
+      {/* HOME */}
       {step === 'home' && (
         <section className="w-full max-w-3xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6">
           <BotaoVoltar voltarPara="boasVindas" />
@@ -121,6 +121,7 @@ console.log({ nome, cpf, email, dataNascimento, senha, perfil, setNome, setCpf, 
         </section>
       )}
 
+      {/* MENSAGENS */}
       {step === 'mensagens' && (
         <section className="w-full max-w-2xl bg-zinc-900 p-8 rounded-xl shadow-xl space-y-6 text-center">
           <BotaoVoltar voltarPara="home" />
@@ -131,6 +132,13 @@ console.log({ nome, cpf, email, dataNascimento, senha, perfil, setNome, setCpf, 
             <Dica titulo="Medo" conteudo={mensagens.medo.join(' ')} />
           </div>
         </section>
+      )}
+
+      {/* FALLBACK: Se nenhum step for tratado */}
+      {!['home', 'mensagens'].includes(step) && (
+        <p className="text-zinc-400 text-center mt-4">
+          Nenhum conteúdo disponível para o estado: <strong>{step}</strong>
+        </p>
       )}
     </main>
   )
